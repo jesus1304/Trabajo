@@ -105,7 +105,7 @@ fun ClienteGuardar(navController:NavHostController) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.Black), // Establece el fondo negro
+                    .background(Color(12, 12, 12))
 
             ) {
                 Column(
@@ -135,7 +135,8 @@ fun ClienteGuardar(navController:NavHostController) {
                             OutlinedTextField(
                                 value = user,
                                 onValueChange = { user = it },
-                                label = { Text("User") },
+                                label = { Text("User",
+                                    color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -161,7 +162,8 @@ fun ClienteGuardar(navController:NavHostController) {
                             OutlinedTextField(
                                 value = nombre,
                                 onValueChange = { nombre = it },
-                                label = { Text("Name") },
+                                label = { Text("Name",
+                                     color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -187,7 +189,8 @@ fun ClienteGuardar(navController:NavHostController) {
                             OutlinedTextField(
                                 value = apellido,
                                 onValueChange = { apellido = it },
-                                label = { Text("Surnames") },
+                                label = { Text("Surnames"
+                                    , color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -213,7 +216,7 @@ fun ClienteGuardar(navController:NavHostController) {
                             OutlinedTextField(
                                 value = contraseña,
                                 onValueChange = { contraseña = it },
-                                label = { Text("Password") },
+                                label = { Text("Password", color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -240,7 +243,7 @@ fun ClienteGuardar(navController:NavHostController) {
                             OutlinedTextField(
                                 value = correo,
                                 onValueChange = { correo = it },
-                                label = { Text("Email") },
+                                label = { Text("Email", color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -267,7 +270,7 @@ fun ClienteGuardar(navController:NavHostController) {
                             OutlinedTextField(
                                 value = telefono,
                                 onValueChange = { telefono = it },
-                                label = { Text("Telephone") },
+                                label = { Text("Telephone", color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -299,7 +302,7 @@ fun ClienteGuardar(navController:NavHostController) {
                                 }
 
                             },
-                            modifier = Modifier.padding(start = 50.dp,  top = 12.dp)
+                            modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
                                 .fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Gray,

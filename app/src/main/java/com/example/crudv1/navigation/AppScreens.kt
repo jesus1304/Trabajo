@@ -23,7 +23,7 @@ sealed class AppScreens(val ruta:String) {
     object InicioSesion : AppScreens("InicioSesion")
     object Inicio2 : AppScreens("Inicio2")
     object Campos : AppScreens("Campos")
-    object Piscina : AppScreens("Piscina")
+    object Facturas : AppScreens("Facturas")
     object BorrarReserva : AppScreens("BorrarReserva")
     object CambiarReserva : AppScreens("CambiarReserva")
     object PiscinaCerrada : AppScreens("PiscinaCerrada")

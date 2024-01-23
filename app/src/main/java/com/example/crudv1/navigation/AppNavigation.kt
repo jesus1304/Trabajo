@@ -7,10 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.crudv1.Screens.MenuInicio
 import com.example.crudv1.Screens.ClienteGuardar
 import com.example.crudv1.Screens.ClienteModificar
+import com.example.crudv1.Screens.Facturas
 import com.example.crudv1.Screens.Inicio2
 import com.example.crudv1.Screens.InicioSesion
 import com.example.crudv1.Screens.MostrarReservas
-import com.example.crudv1.Screens.Piscina
 
 
 
@@ -24,7 +24,7 @@ fun AppNavigation() {
         composable(AppScreens.ClienteModificar.ruta) { ClienteModificar(navigationController) }
         composable(AppScreens.InicioSesion.ruta) { InicioSesion(navigationController) }
         composable(AppScreens.Inicio2.ruta) { Inicio2(navigationController) }
-        composable(AppScreens.Piscina.ruta) { Piscina(navigationController) }
+        composable(AppScreens.Facturas.ruta) { Facturas(navigationController) }
         composable(AppScreens.MostrarReservas.ruta) { MostrarReservas(navigationController) }
 
 
