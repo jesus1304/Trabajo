@@ -135,7 +135,7 @@ fun InicioSesion(navController:NavHostController) {
                         )
                     }
                     val db = FirebaseFirestore.getInstance()
-                    val coleccion = "clientes"
+                    val coleccion = "cliente"
 
                     var mensajeConfirmacion by remember { mutableStateOf("") }
                     val context = LocalContext.current
@@ -165,7 +165,7 @@ fun InicioSesion(navController:NavHostController) {
                                                 val isLoggedIn =
                                                     SessionManager.isLoggedIn(context)
                                                 if (isLoggedIn) {
-                                                    navController.navigate("Inicio") // Navega a la página de inicio
+                                                    navController.navigate("Piscina") // Navega a la página de inicio
 
                                                 }
                                                 if (!credentialsMatched) {

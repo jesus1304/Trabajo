@@ -28,6 +28,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.AlertDialog
@@ -92,14 +93,15 @@ fun Piscina(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Reservar Piscina")
+                    Text("Facturas")
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.Filled.Person,
                             contentDescription = "Localized description"
                         )
+
                     }
                 },
                 actions = {
@@ -146,7 +148,6 @@ fun Piscina(navController: NavHostController) {
                 .verticalScroll(rememberScrollState()),
         )
         {
-            var expanded by remember { mutableStateOf(false) }
             var fecha by rememberSaveable { mutableStateOf("") }
             val mCalendar: Calendar = Calendar.getInstance()
             val anio: Int = mCalendar.get(Calendar.YEAR)
@@ -160,7 +161,6 @@ fun Piscina(navController: NavHostController) {
                     fecha = "$anio/${mesFormateado}/$diaFormateado"
                 }, anio, mes, dia
             )
-            val horario = (8..21).map { String.format("%02d:00", it) }
             var selectedHour by remember { mutableStateOf("") }
             var piscina by rememberSaveable { mutableStateOf("") }
             var showDialog by remember { mutableStateOf(false) }
@@ -181,52 +181,78 @@ fun Piscina(navController: NavHostController) {
                             .padding(20.dp)
 
                     )
-
-
-                    val opcionesPiscina = listOf("Piscina Aire Libre", "Piscina Cubierta")
+                    var direccion by rememberSaveable { mutableStateOf("") }
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(top = 25.dp,start=55.dp,end=7.dp)
+                        modifier = Modifier.padding(4.dp)
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .background(Color.White)
-                                .border(1.dp, Color.Gray)
-                                .fillMaxWidth()
-                                .clickable { optionsExpanded2 = true }
-                        ) {
-                            Text(
-                                text = if (piscina.isEmpty()) "Piscina Aire Libre/Piscina Cubierta" else piscina,
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                        val icon = Icons.Default.Email
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(44.dp),
+                        )
+
+                        OutlinedTextField(
+                            value = direccion,
+                            onValueChange = { direccion = it },
+                            label = { Text("Direccion") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+
                             )
-                        }
-                        DropdownMenu(
-                            expanded = optionsExpanded2,
-                            onDismissRequest = { optionsExpanded2 = false }
-                        ) {
-                            opcionesPiscina.forEach { opcion ->
-                                Box(
-                                    modifier = Modifier
-                                        .background(Color.White)
-                                        .border(1.dp, Color.Gray)
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            piscina = opcion
-                                            optionsExpanded2 = false
-                                        }
-                                ) {
-                                    Text(
-                                        text = opcion,
-                                        modifier = Modifier.padding(16.dp)
-                                    )
-                                }
-                            }
-                        }
                     }
+                    var Nif by rememberSaveable { mutableStateOf("") }
 
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        val icon = Icons.Default.Email
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(44.dp),
+                        )
 
+                        OutlinedTextField(
+                            value = Nif,
+                            onValueChange = { Nif = it },
+                            label = { Text("Nif") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+
+                            )
+                    }
+                    var precio by rememberSaveable { mutableStateOf("") }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        val icon = Icons.Default.Email
+                        Icon(
+                            imageVector = icon,
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(44.dp),
+                        )
+
+                        OutlinedTextField(
+                            value = precio,
+                            onValueChange = { precio = it },
+                            label = { Text("Precio") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true,
+
+                            )
+                    }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
@@ -250,47 +276,6 @@ fun Piscina(navController: NavHostController) {
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true
                         )
-                    }
-                    Row(
-                        modifier = Modifier.padding(5.dp),
-                    ) {
-                        val dateIcon = Icons.Default.DateRange
-                        Icon(
-                            imageVector = dateIcon,
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(44.dp)
-                        )
-                        Column(
-                            modifier = Modifier.padding(3.dp)
-                        ) {
-                            OutlinedButton(
-                                onClick = { expanded = true },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 3.dp),
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                Text(text = if (selectedHour.isNotEmpty()) selectedHour else "Selecciona una hora")
-                            }
-
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                for (hour in horario) {
-                                    DropdownMenuItem(
-                                        text = { Text(text = hour) },
-                                        onClick = {
-                                            selectedHour = hour
-                                            expanded = false
-                                        }
-                                    )
-                                }
-                            }
-                        }
                     }
 
                     Row(
@@ -320,7 +305,6 @@ fun Piscina(navController: NavHostController) {
                     var mensajeConfirmacion by remember { mutableStateOf("") }
                     val context = LocalContext.current
                     var reservaConfirmada by remember { mutableStateOf(false) }
-                    var puntosOtorgados by remember { mutableStateOf(false) }
 
                     Button(
                         onClick = {
@@ -362,13 +346,15 @@ fun Piscina(navController: NavHostController) {
 
                                         val reservaData = hashMapOf(
                                             "fecha" to fecha.toString(),
-                                            "horario" to selectedHour.toString(),
-                                            "piscina" to piscina.toString(),
+                                            "direccion" to direccion.toString(),
+                                            "precio" to precio.toString(),
+                                            "Nif" to Nif.toString(),
                                             "user" to nombreUsuario.toString(),
-                                        )
+
+                                            )
 
                                         // Agregar la reserva a la colección "piscina"
-                                        db.collection("piscina")
+                                        db.collection("factura")
                                             .add(reservaData)
                                             .addOnSuccessListener { documentReference ->
                                                 Log.d("Reserva", "Reserva exitosa. Documento ID: ${documentReference.id}")
@@ -421,53 +407,7 @@ fun Piscina(navController: NavHostController) {
                         )
 
                     }
-                    Button(
-                                    onClick = {
-                                        if (reservaConfirmada && !puntosOtorgados) {
-                                            val nombreUsuario = SessionManager.getUsername(context)
 
-                                            // Referencia a la colección "clientes" filtrando por el campo "user"
-                                            val clientesRef = db.collection("clientes").whereEqualTo("user", nombreUsuario)
-
-                                            clientesRef.get()
-                                                .addOnSuccessListener { querySnapshot ->
-                                                    if (!querySnapshot.isEmpty) {
-                                                        // Debería haber solo un documento correspondiente al usuario
-                                                        val document = querySnapshot.documents[0]
-                                                        val puntosActuales = document.getLong("puntos") ?: 0
-
-                                                        // Actualizar los puntos en el documento
-                                                        document.reference.update("puntos", puntosActuales + 5)
-                                                            .addOnSuccessListener {
-                                                                Log.d("Firestore", "Puntos actualizados exitosamente")
-                                                                // Establecer el estado de los puntos otorgados como true
-                                                                puntosOtorgados = true
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                Log.e("Firestore", "Error al actualizar los puntos: ${exception.message}")
-                                                            }
-                                                    } else {
-                                                        // Documento no encontrado
-                                                        Log.e("Firestore", "Documento no encontrado para el usuario $nombreUsuario")
-                                                    }
-                                                }
-                                                .addOnFailureListener { exception ->
-                                                    Log.e("Firestore", "Error al obtener el documento: ${exception.message}")
-                                                }
-                                        }
-                                    },
-                            modifier = Modifier.padding(start = 25.dp, end = 25.dp)
-                                .fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (reservaConfirmada && !puntosOtorgados) Color(0xFF4CAF50) else Color.Gray,
-                                contentColor = Color.White
-                            ),
-                        ) {
-                            Text(
-                                text = "Sumar 5 Puntos",
-                                fontSize = 18.sp
-                        )
-                    }
                 }
             }
         }

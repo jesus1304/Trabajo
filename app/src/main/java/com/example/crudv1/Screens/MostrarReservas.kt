@@ -72,10 +72,12 @@ fun MostrarReservas(navController: NavHostController) {
 
 
     data class Reserva(
-        val piscina: String,
+        val direccion: String,
         val user:String,
         val fecha: String,
-        val horario: String
+        val precio: String,
+        val Nif: String
+
 
     )
 
@@ -92,7 +94,7 @@ fun MostrarReservas(navController: NavHostController) {
                     Text("Tus reservas")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("piscina") }) {
+                    IconButton(onClick = { navController.navigate("MenuInicio") }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -119,7 +121,7 @@ fun MostrarReservas(navController: NavHostController) {
             val context = LocalContext.current
             LaunchedEffect(Unit) {
                 val db = FirebaseFirestore.getInstance()
-                val coleccion = "piscina"
+                val coleccion = "factura"
                 val nombreUsuario = SessionManager.getUsername(context)
                 val fechaActual = Calendar.getInstance().time
 
@@ -130,11 +132,12 @@ fun MostrarReservas(navController: NavHostController) {
                         val reservasUsuario = resultado.documents.map { cliente ->
                             Reserva(
                                 fecha = cliente.getString("fecha") ?: "",
-                                piscina = cliente.getString("piscina") ?: "",
-                                horario = cliente.getString("horario") ?: "",
-                                user = cliente.getString("user") ?: ""
+                                direccion = cliente.getString("direccion") ?: "",
+                                Nif = cliente.getString("Nif") ?: "",
+                                user = cliente.getString("user") ?: "",
+                                precio = cliente.getString("precio") ?: ""
                             )
-                        }.filter { it.piscina == "Piscina Aire Libre" && it.fecha > SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(fechaActual) }
+                        }.filter {  it.fecha > SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(fechaActual) }
                             .sortedBy { it.fecha }
 
                         reservas.value = reservasUsuario
@@ -147,7 +150,6 @@ fun MostrarReservas(navController: NavHostController) {
 
 
 
-            var nombreFiltrar by remember { mutableStateOf("") }
             var fecha by remember { mutableStateOf("") }
             val mCalendar: Calendar = Calendar.getInstance()
             val anio: Int = mCalendar.get(Calendar.YEAR)
@@ -186,16 +188,15 @@ fun MostrarReservas(navController: NavHostController) {
 
             }
             val reservasFiltradasPorNombreYFecha =
-                if (nombreFiltrar.isNotBlank() || fecha.isNotBlank()) {
+                if ( fecha.isNotBlank()) {
                     reservas.value.filter {
-
                                 (it.fecha.equals(
                                     fecha,
                                     ignoreCase = true
                                 ) || fecha.isBlank())
-                    }.sortedWith(compareBy({ it.fecha }, { it.horario }))
+                    }
                 } else {
-                    reservas.value.sortedWith(compareBy({ it.fecha }, { it.horario }))
+                    reservas.value.sortedWith(compareBy({ it.fecha }))
                 }
 
             for (reserva in reservasFiltradasPorNombreYFecha) {
@@ -229,25 +230,40 @@ fun MostrarReservas(navController: NavHostController) {
                         )
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.horario}",
+                            text = "Hora: ${reserva.direccion}",
+                            fontSize = 18.sp
+
+                        )
+                    }
+                        Row() {
+                        Text(
+                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                            text = "Hora: ${reserva.Nif}",
+                            fontSize = 18.sp
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                            text = "Hora: ${reserva.precio}",
                             fontSize = 18.sp
                         )
                     }
 
                     val db = FirebaseFirestore.getInstance()
-                    val coleccion = "piscina"
+                    val coleccion = "factura"
                     var user by remember { mutableStateOf("") }
                     var mensajeConfirmacion by remember { mutableStateOf("") }
                     var fechaSeleccionada by remember { mutableStateOf("") }
-                    var horaSeleccionada by remember { mutableStateOf("") }
-                    var piscinaSeleccionada by remember { mutableStateOf("") }
+                    var precioSeleccionada by remember { mutableStateOf("") }
+                    var direccionSeleccionada by remember { mutableStateOf("") }
+                    var NifSeleccionada by remember { mutableStateOf("") }
                     var showDialog by remember { mutableStateOf(false) }
 
                     Button(
                         onClick = {
                             fechaSeleccionada = reserva.fecha
-                            horaSeleccionada = reserva.horario
-                            piscinaSeleccionada = reserva.piscina
+                            precioSeleccionada = reserva.precio
+                            direccionSeleccionada = reserva.direccion
+                            NifSeleccionada = reserva.Nif
                             user = reserva.user
                             showDialog = true
                         },
@@ -277,8 +293,10 @@ fun MostrarReservas(navController: NavHostController) {
                                         db.collection(coleccion)
                                             .whereEqualTo("user", nombreUsuario)
                                             .whereEqualTo("fecha", fechaSeleccionada)
-                                            .whereEqualTo("horario", horaSeleccionada)
-                                            .whereEqualTo("piscina", piscinaSeleccionada)
+                                            .whereEqualTo("direccion", direccionSeleccionada)
+                                            .whereEqualTo("precio", precioSeleccionada)
+                                            .whereEqualTo("Nif", NifSeleccionada)
+
                                             .get()
                                             .addOnSuccessListener { querySnapshot ->
                                                 for (document in querySnapshot) {

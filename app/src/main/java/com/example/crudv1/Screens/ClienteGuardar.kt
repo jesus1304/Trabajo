@@ -255,7 +255,7 @@ fun ClienteGuardar(navController:NavHostController) {
                         )
                 }
                 val db = FirebaseFirestore.getInstance()
-                val coleccion = "clientes"
+                val coleccion = "cliente"
                 var showDialog by remember { mutableStateOf(false) }
                 var mensajeConfirmacion by remember { mutableStateOf("") }
 

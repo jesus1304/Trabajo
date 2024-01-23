@@ -92,21 +92,7 @@ fun MenuInicio(navController: NavHostController) {
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.logo2),
-                    contentDescription = "Descripción de la imagen",
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .height(70.dp),
-
-                    )
-
-            }
+         
 
                 Column(
                     modifier = Modifier
@@ -131,21 +117,6 @@ fun MenuInicio(navController: NavHostController) {
                         )
                     }
 
-                    Button(
-                        onClick = { navController.navigate("Puntos") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(2.dp),
-                        contentPadding = PaddingValues(16.dp),
-                        content = {
-                            Text(
-                                text = "Puntos",
-                                color = Color.White,
-                                fontSize = 20.sp,
-                                style = TextStyle.Default
-                            )
-                        }
-                    )
                     Button(
                         onClick = { navController.navigate("ClienteModificar") },
                         modifier = Modifier
