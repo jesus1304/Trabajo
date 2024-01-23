@@ -44,6 +44,7 @@ sealed class AppScreens(val ruta:String) {
     object Puntos : AppScreens("Puntos")
     object Futbol : AppScreens("Futbol")
     object ReservasFutbol : AppScreens("ReservasFutbol")
+    object StartNow : AppScreens("StartNow")
 
 
 

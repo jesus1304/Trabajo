@@ -11,13 +11,13 @@ import com.example.crudv1.Screens.Inicio2
 import com.example.crudv1.Screens.InicioSesion
 import com.example.crudv1.Screens.MostrarReservas
 import com.example.crudv1.Screens.Piscina
-
+import com.example.crudv1.Screens.StartNow
 
 
 @Composable
 fun AppNavigation() {
     val navigationController = rememberNavController()
-    NavHost(navController = navigationController, startDestination = AppScreens.InicioSesion.ruta)
+    NavHost(navController = navigationController, startDestination = AppScreens.StartNow.ruta)
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
         composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController) }
@@ -26,6 +26,7 @@ fun AppNavigation() {
         composable(AppScreens.Inicio2.ruta) { Inicio2(navigationController) }
         composable(AppScreens.Piscina.ruta) { Piscina(navigationController) }
         composable(AppScreens.MostrarReservas.ruta) { MostrarReservas(navigationController) }
+        composable(AppScreens.StartNow.ruta) { StartNow(navigationController) }
 
 
 
