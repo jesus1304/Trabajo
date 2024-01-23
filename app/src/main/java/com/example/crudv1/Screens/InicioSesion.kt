@@ -165,7 +165,7 @@ fun InicioSesion(navController:NavHostController) {
                                                 val isLoggedIn =
                                                     SessionManager.isLoggedIn(context)
                                                 if (isLoggedIn) {
-                                                    navController.navigate("Piscina") // Navega a la página de inicio
+                                                    navController.navigate("Facturas") // Navega a la página de inicio
 
                                                 }
                                                 if (!credentialsMatched) {

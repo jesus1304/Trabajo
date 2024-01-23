@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Menu
@@ -161,15 +162,13 @@ fun Facturas(navController: NavHostController) {
                                 "\n" +
                                 "Ingreso Rápido: Completa la información de tu factura de manera rápida y sencilla.\n" +
                                 "\n" +
-                                "Categorización Automática: Utilizamos tecnología inteligente para categorizar automáticamente tus facturas, facilitando la gestión y análisis.\n" +
-                                "\n" +
                                 "Historial Detallado: Accede a un historial completo de tus facturas anteriores con detalles específicos para un seguimiento preciso.\n" +
                                 "\n" +
                                 "Recordatorios de Pago: Configura recordatorios para no perder de vista las fechas de vencimiento y evitar retrasos en los pagos.\n" +
                                 "\n" +
-                                "Seguridad: Tu información es segura con nosotros. Utilizamos medidas avanzadas de seguridad para proteger tus datos.\n" +
-                                "\n" +
-                                "Simplifica tu experiencia con las facturas. ¡Comienza a usar [Nombre de la Aplicación] hoy y mantén tus finanzas organizadas de manera eficiente!",
+                                "Seguridad: Tu información es segura con nosotros. Utilizamos medidas avanzadas de seguridad para proteger tus datos.\n"
+                                ,
+                        color = Color.White,
                         style = TextStyle(
                             fontSize = 19.sp
                         ),
@@ -185,23 +184,26 @@ fun Facturas(navController: NavHostController) {
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(4.dp)
                     ) {
-                        val icon = Icons.Default.Email
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(44.dp),
-                        )
-
                         OutlinedTextField(
                             value = direccion,
                             onValueChange = { direccion = it },
-                            label = { Text("Direccion") },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-
-                            )
+                            label = { Text("Direccion",
+                                color = Color.White) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Gray),
+                            leadingIcon = {
+                                val icon = Icons.Default.AccountCircle
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(44.dp),
+                                    tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                )
+                            }
+                        )
                     }
+
                     var Nif by rememberSaveable { mutableStateOf("") }
 
                     Row(
@@ -209,94 +211,79 @@ fun Facturas(navController: NavHostController) {
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(4.dp)
                     ) {
-                        val icon = Icons.Default.Email
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(44.dp),
-                        )
-
                         OutlinedTextField(
                             value = Nif,
                             onValueChange = { Nif = it },
-                            label = { Text("Nif") },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-
-                            )
+                            label = { Text("Nif",
+                                color = Color.White) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Gray),
+                            leadingIcon = {
+                                val icon = Icons.Default.AccountCircle
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(44.dp),
+                                    tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                )
+                            }
+                        )
                     }
                     var precio by rememberSaveable { mutableStateOf("") }
-
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(4.dp)
                     ) {
-                        val icon = Icons.Default.Email
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(44.dp),
-                        )
-
                         OutlinedTextField(
                             value = precio,
                             onValueChange = { precio = it },
-                            label = { Text("Precio") },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true,
-
-                            )
+                            label = { Text("Precio",
+                                color = Color.White) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Gray),
+                            leadingIcon = {
+                                val icon = Icons.Default.AccountCircle
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(44.dp),
+                                    tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                )
+                            }
+                        )
                     }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.padding(7.dp)
                     ) {
-                        val dateIcon = Icons.Default.DateRange
-                        Icon(
-                            imageVector = dateIcon,
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clickable { mDatePickerDialog.show() }
-                                .align(Alignment.CenterVertically)
-                        )
                         OutlinedTextField(
                             value = fecha,
                             onValueChange = { fecha = it },
-                            label = { Text("Select date") },
+                            label = { Text("Select date",
+                                color = Color.White) },
                             readOnly = true,
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
+                            modifier = Modifier.fillMaxWidth()
+                            .background(Color.Gray),
+                        singleLine = true,
+                            leadingIcon = {
+                                val dateIcon = Icons.Default.DateRange
+                                Icon(
+                                    imageVector = dateIcon,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(44.dp)
+                                        .clickable { mDatePickerDialog.show() }
+                                        .align(Alignment.CenterVertically)
+                                )
+                            }
                         )
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.pis1),
-                            contentDescription = "Descripción de la imagen",
-                            modifier = Modifier
-                                .padding(5.dp)
-                                .weight(1f) // Ocupa el espacio disponible igualmente
-                                .height(115.dp)
-                        )
-                        Image(
-                            painter = painterResource(id = R.drawable.pis2),
-                            contentDescription = "Descripción de la imagen",
-                            modifier = Modifier
-                                .padding(5.dp)
-                                .weight(1f) // Ocupa el espacio disponible igualmente
-                                .height(120.dp)
-                        )
-                    }
+
                     val db = FirebaseFirestore.getInstance()
                     var user by remember { mutableStateOf("") }
                     var mensajeConfirmacion by remember { mutableStateOf("") }
@@ -311,15 +298,15 @@ fun Facturas(navController: NavHostController) {
                                 mensajeConfirmacion = "Seleccione una fecha primero"
                             }
                         },
-                        modifier = Modifier.padding(start = 25.dp, end = 25.dp)
+                        modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
                             .fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF4CAF50),
+                            containerColor = Color.Gray,
                             contentColor = Color.White
-                        ),
+                        )
                     ) {
                         Text(
-                            text = "Reservar", fontSize = 18.sp
+                            text = "Hacer Factura", fontSize = 18.sp
                         )
                     }
 
