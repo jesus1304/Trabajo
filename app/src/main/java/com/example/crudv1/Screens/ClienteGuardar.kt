@@ -1,5 +1,6 @@
 package com.example.crudv1.Screens
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -102,8 +103,10 @@ fun ClienteGuardar(navController:NavHostController) {
         }
     }
     Card(
-        modifier = Modifier.padding(top = 65.dp, bottom = 45.dp),
-    ) {
+        modifier = Modifier
+            .padding(top = 65.dp, bottom = 45.dp)
+            .background(Color.Black), // Establece el fondo negro
+    ){
         Column(
             modifier = Modifier
 
