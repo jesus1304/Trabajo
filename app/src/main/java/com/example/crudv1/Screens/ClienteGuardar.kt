@@ -2,9 +2,11 @@ package com.example.crudv1.Screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -56,44 +58,36 @@ import com.google.firebase.firestore.FirebaseFirestore
 @Composable
 
 fun ClienteGuardar(navController:NavHostController) {
-    var presses by remember { mutableIntStateOf(0) }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = Color(12, 12, 12),
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Registro")
+                    Text("Registro", color = Color.White)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("InicioSesion") }) {
+                    IconButton(onClick = { navController.navigate("InicioSesion") }) {val icon = Icons.Default.AccountCircle
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description",
+                            tint = Color.White
                         )
                     }
                 },
-                actions = {
 
-                }
             )
         },
-        bottomBar = {
-            BottomAppBar(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.primary,
-            ) {
 
-            }
-        },
 
         ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding),
+
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
 
@@ -101,259 +95,292 @@ fun ClienteGuardar(navController:NavHostController) {
                 mutableStateOf(TextFieldValue("", TextRange(0, 7)))
             }
         }
-    }
-    Card(
-        modifier = Modifier
-            .padding(top = 65.dp, bottom = 45.dp)
-            .background(Color.Black), // Establece el fondo negro
-    ){
-        Column(
+
+        Card(
             modifier = Modifier
-
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(top = 60.dp)
+                .fillMaxSize()
+                .background(Color(12, 12, 12))
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black), // Establece el fondo negro
+
             ) {
-                var user by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    val icon = Icons.Default.AccountCircle
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-
-
-                    OutlinedTextField(
-                        value = user,
-                        onValueChange = { user = it },
-                        label = { Text("User") },
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "MerryService",
+                            fontSize = 30.sp,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                                .padding(bottom = 16.dp)
                         )
-                }
-                var nombre by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Person
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
+                        var user by rememberSaveable { mutableStateOf("") }
 
-                    OutlinedTextField(
-                        value = nombre,
-                        onValueChange = { nombre = it },
-                        label = { Text("Nombre") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                var apellido by rememberSaveable { mutableStateOf("") }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Person
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-                    OutlinedTextField(
-                        value = apellido,
-                        onValueChange = { apellido = it },
-                        label = { Text("Apellido") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                var contraseña by rememberSaveable { mutableStateOf("") }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Lock
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-                    OutlinedTextField(
-                        value = contraseña,
-                        onValueChange = { contraseña = it },
-                        label = { Text("Password") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        visualTransformation = PasswordVisualTransformation()
-                    )
-                }
-                var correo by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Email
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-
-                    OutlinedTextField(
-                        value = correo,
-                        onValueChange = { correo = it },
-                        label = { Text("Correo") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                val icon = Icons.Default.Phone
-                var telefono by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(7.dp)
-                )
-                {
-
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-                    OutlinedTextField(
-                        value = telefono,
-                        onValueChange = { telefono = it },
-                        label = { Text("Telefono") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                val db = FirebaseFirestore.getInstance()
-                val coleccion = "cliente"
-                var showDialog by remember { mutableStateOf(false) }
-                var mensajeConfirmacion by remember { mutableStateOf("") }
-
-                Button(
-                    onClick = {
-                        if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() &&
-                            telefono.isNotEmpty() && correo.isNotEmpty() && user.isNotEmpty()
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
                         ) {
-                            showDialog = true
-                        } else {
-                            mensajeConfirmacion = "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
+                            OutlinedTextField(
+                                value = user,
+                                onValueChange = { user = it },
+                                label = { Text("User") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.AccountCircle
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
                         }
 
-                    },
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp,top= 12.dp)
-                        .fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF4CAF50),
-                        contentColor = Color.White
-                    ),
-                ) {
-                    Text(
-                        text = "Registrarse", fontSize = 18.sp
-                    )
-                }
+                        var nombre by rememberSaveable { mutableStateOf("") }
 
-                if (showDialog) {
-                    AlertDialog(
-                        onDismissRequest = {
-                            showDialog = false
-                        },
-                        title = {
-                            Text("Confirmar envío")
-                        },
-                        text = {
-                            Text("¿Estás seguro de enviar los datos?")
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    val data = hashMapOf(
-                                        "nombre" to nombre,
-                                        "apellido" to apellido ,
-                                        "contraseña" to contraseña,
-                                        "telefono" to telefono,
-                                        "correo" to correo,
-                                        "user" to user,
-
-                                        )
-
-                                    db.collection(coleccion)
-                                        .add(data)
-                                        .addOnSuccessListener {
-                                            mensajeConfirmacion =
-                                                "Te has registrado"
-                                            nombre = ""
-                                            apellido = ""
-                                            contraseña = ""
-                                            telefono = ""
-                                            correo = ""
-                                            user = ""
-
-                                            showDialog = false
-                                        }
-                                        .addOnFailureListener { exception ->
-                                            mensajeConfirmacion = "Error al guardar: $exception"
-                                            showDialog = false
-                                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = nombre,
+                                onValueChange = { nombre = it },
+                                label = { Text("Name") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Person
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
                                 }
-                            ) {
-                                Text("Confirmar")
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = {
+                            )
+                        }
+
+                        var apellido by rememberSaveable { mutableStateOf("") }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = apellido,
+                                onValueChange = { apellido = it },
+                                label = { Text("Surnames") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Person
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
+                        }
+
+                        var contraseña by rememberSaveable { mutableStateOf("") }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = contraseña,
+                                onValueChange = { contraseña = it },
+                                label = { Text("Password") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                visualTransformation = PasswordVisualTransformation(),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Lock
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
+                        }
+
+                        var correo by rememberSaveable { mutableStateOf("") }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = correo,
+                                onValueChange = { correo = it },
+                                label = { Text("Email") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Email
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
+                        }
+
+                        val icon = Icons.Default.Phone
+                        var telefono by rememberSaveable { mutableStateOf("") }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(7.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = telefono,
+                                onValueChange = { telefono = it },
+                                label = { Text("Telephone") },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
+                        }
+
+                        val db = FirebaseFirestore.getInstance()
+                        val coleccion = "cliente"
+                        var showDialog by remember { mutableStateOf(false) }
+                        var mensajeConfirmacion by remember { mutableStateOf("") }
+
+                        Button(
+                            onClick = {
+                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() &&
+                                    telefono.isNotEmpty() && correo.isNotEmpty() && user.isNotEmpty()
+                                ) {
+                                    showDialog = true
+                                } else {
+                                    mensajeConfirmacion =
+                                        "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
+                                }
+
+                            },
+                            modifier = Modifier.padding(start = 50.dp,  top = 12.dp)
+                                .fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Gray,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(
+                                text = "Registrarse", fontSize = 18.sp
+                            )
+                        }
+
+                        if (showDialog) {
+                            AlertDialog(
+                                onDismissRequest = {
                                     showDialog = false
-                                }
-                            ) {
-                                Text("Cancelar")
-                            }
-                        }
-                    )
-                }
+                                },
+                                title = {
+                                    Text("Confirmar envío")
+                                },
+                                text = {
+                                    Text("¿Estás seguro de enviar los datos?")
+                                },
+                                confirmButton = {
+                                    Button(
+                                        onClick = {
+                                            val data = hashMapOf(
+                                                "nombre" to nombre,
+                                                "apellido" to apellido,
+                                                "contraseña" to contraseña,
+                                                "telefono" to telefono,
+                                                "correo" to correo,
+                                                "user" to user,
 
-                if (mensajeConfirmacion.isNotEmpty()) {
-                    Text(
-                        text = mensajeConfirmacion,
-                        modifier = Modifier.padding(top = 15.dp),
-                        color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
-                    )
+                                                )
+
+                                            db.collection(coleccion)
+                                                .add(data)
+                                                .addOnSuccessListener {
+                                                    mensajeConfirmacion =
+                                                        "Te has registrado"
+                                                    nombre = ""
+                                                    apellido = ""
+                                                    contraseña = ""
+                                                    telefono = ""
+                                                    correo = ""
+                                                    user = ""
+
+                                                    showDialog = false
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    mensajeConfirmacion =
+                                                        "Error al guardar: $exception"
+                                                    showDialog = false
+                                                }
+                                        }
+                                    ) {
+                                        Text("Confirmar")
+                                    }
+                                },
+                                dismissButton = {
+                                    Button(
+                                        onClick = {
+                                            showDialog = false
+                                        }
+                                    ) {
+                                        Text("Cancelar")
+                                    }
+                                }
+                            )
+                        }
+
+                        if (mensajeConfirmacion.isNotEmpty()) {
+                            Text(
+                                text = mensajeConfirmacion,
+                                modifier = Modifier.padding(top = 15.dp),
+                                color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
-
-
