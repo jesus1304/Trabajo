@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -48,6 +50,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -65,9 +68,8 @@ fun Facturas(navController: NavHostController) {
     var optionsExpanded2 by remember { mutableStateOf(false) }
 
     val options = listOf(
-        "Ver Reservas Piscina Aire Libre",
-        "Ver Reservas Piscina Cubierta",
-        "Información piscinas"
+        "Ver Facturas Usuario",
+        "Ver todas las facturas"
 
     )
     Scaffold(
@@ -105,15 +107,10 @@ fun Facturas(navController: NavHostController) {
                                 text = { Text(text = option) },
                                 onClick = {
                                     when (option) {
-                                        "Ver Reservas Piscina Aire Libre" -> navController.navigate(
+                                        "Ver Facturas Usuario" -> navController.navigate(
                                             "MostrarReservas"
                                         )
-
-                                        "Ver Reservas Piscina Cubierta" -> navController.navigate(
-                                            "MostrarReservas2"
-                                        )
-
-                                        "Información piscinas" -> navController.navigate("PiscinaCerrada")
+                                        "Ver todas las facturas" -> navController.navigate("MostrarFacturas")
 
                                     }
                                     optionsExpanded = false
@@ -130,6 +127,7 @@ fun Facturas(navController: NavHostController) {
         Box(
             modifier = Modifier.fillMaxWidth()
                 .padding(innerPadding)
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .background(Color(12, 12, 12))
 
@@ -154,29 +152,20 @@ fun Facturas(navController: NavHostController) {
             Column {
 
 
-                Column {
-                    Text(
-                        text = "Facilitamos el proceso de ingreso de facturas para que puedas llevar un control eficiente de tus transacciones comerciales. Con nuestra aplicación, puedes agregar y organizar fácilmente tus facturas en un solo lugar.\n" +
-                                "\n" +
-                                "Características Principales:\n" +
-                                "\n" +
-                                "Ingreso Rápido: Completa la información de tu factura de manera rápida y sencilla.\n" +
-                                "\n" +
-                                "Historial Detallado: Accede a un historial completo de tus facturas anteriores con detalles específicos para un seguimiento preciso.\n" +
-                                "\n" +
-                                "Recordatorios de Pago: Configura recordatorios para no perder de vista las fechas de vencimiento y evitar retrasos en los pagos.\n" +
-                                "\n" +
-                                "Seguridad: Tu información es segura con nosotros. Utilizamos medidas avanzadas de seguridad para proteger tus datos.\n"
-                                ,
-                        color = Color.White,
-                        style = TextStyle(
-                            fontSize = 19.sp
-                        ),
-                        textAlign = TextAlign.Justify,
-                        modifier = Modifier
-                            .padding(20.dp)
 
+                Column {
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    Text(
+                        text = "Guardar factura",
+                        fontSize = 30.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                            .padding(bottom = 16.dp)
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     var direccion by rememberSaveable { mutableStateOf("") }
 
                     Row(
@@ -203,7 +192,7 @@ fun Facturas(navController: NavHostController) {
                             }
                         )
                     }
-
+                    Spacer(modifier = Modifier.height(8.dp))
                     var Nif by rememberSaveable { mutableStateOf("") }
 
                     Row(
@@ -230,6 +219,7 @@ fun Facturas(navController: NavHostController) {
                             }
                         )
                     }
+                    Spacer(modifier = Modifier.height(8.dp))
                     var precio by rememberSaveable { mutableStateOf("") }
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -255,6 +245,7 @@ fun Facturas(navController: NavHostController) {
                             }
                         )
                     }
+                    Spacer(modifier = Modifier.height(8.dp))
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center,
@@ -282,7 +273,7 @@ fun Facturas(navController: NavHostController) {
                             }
                         )
                     }
-
+                    Spacer(modifier = Modifier.height(8.dp))
 
                     val db = FirebaseFirestore.getInstance()
                     var user by remember { mutableStateOf("") }
@@ -386,12 +377,19 @@ fun Facturas(navController: NavHostController) {
                     if (mensajeConfirmacion.isNotEmpty()) {
                         Text(
                             text = mensajeConfirmacion,
-                            modifier = Modifier.padding(top = 16.dp),
+                            modifier = Modifier.padding(top = 5.dp),
                             color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
                         )
 
                     }
+                    Image(
+                        painter = painterResource(id = R.drawable.factura2),
+                        contentDescription = "Descripción de la imagen",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
 
+                    )
                 }
             }
         }
