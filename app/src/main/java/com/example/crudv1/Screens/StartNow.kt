@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,15 +42,17 @@ fun StartNow(navController: NavHostController) {
                 .padding(55.dp),
             style = androidx.compose.ui.text.TextStyle(
                 color = Color.White,
-                fontSize = 32.sp,
+                fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             )
         )
             Image(
-                painter = painterResource(id = R.drawable.merryservice),
+                painter = painterResource(id = R.drawable.merryservice2),
                 contentDescription = null,
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary)
+                    .size(400.dp)
+                    .align(Alignment.Center)
+                    .offset(y = (-100).dp),
 
                 )
 
