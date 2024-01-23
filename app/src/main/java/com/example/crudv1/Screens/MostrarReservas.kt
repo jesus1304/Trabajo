@@ -87,17 +87,19 @@ fun MostrarReservas(navController: NavHostController) {
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = Color(12, 12, 12),
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Tus reservas")
+                    Text("Facturas", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description",
+                                    tint = Color.White
+
                         )
                     }
                 },
@@ -114,8 +116,11 @@ fun MostrarReservas(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState()), // Agrega el desplazamiento vertical aquí
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .verticalScroll(rememberScrollState())
+            .background(Color(12, 12, 12)),
+
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+
         ) {
             var datos by remember { mutableStateOf("") }
             val context = LocalContext.current

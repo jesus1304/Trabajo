@@ -76,17 +76,18 @@ fun Facturas(navController: NavHostController) {
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = Color(12, 12, 12),
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Facturas")
+                    Text("Facturas", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
                         Icon(
                             imageVector = Icons.Filled.Person,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description" ,
+                                    tint = Color.White
                         )
 
                     }
@@ -265,6 +266,7 @@ fun Facturas(navController: NavHostController) {
                                 Icon(
                                     imageVector = dateIcon,
                                     contentDescription = null,
+                                    tint = Color.White,
                                     modifier = Modifier
                                         .size(44.dp)
                                         .clickable { mDatePickerDialog.show() }
