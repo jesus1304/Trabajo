@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,8 +56,36 @@ fun StartNow(navController: NavHostController) {
                     .size(400.dp)
                     .align(Alignment.Center)
                     .offset(y = (-100).dp),
-
                 )
+        Button(
+            onClick = { /* Acción al hacer clic en el botón */ },
+            modifier = Modifier
+
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 126.dp)
+                .height(100.dp)
+                .width(300.dp)
+                .background(color = Color.Black, shape = RoundedCornerShape(12.dp)),
+                    colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.White
+        )
+        ) {
+            Text(
+                text = "START NOW!!!",
+                color = Color.Black,
+                fontWeight = FontWeight.Bold ,
+                style = androidx.compose.ui.text.TextStyle(
+                fontSize = 26.sp,
+                fontWeight = FontWeight.Bold
+            )
+            )
+
+
+        }
+        Text(
+            text=""
+        )
 
     }
 }
