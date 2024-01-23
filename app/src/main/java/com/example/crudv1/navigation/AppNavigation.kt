@@ -12,7 +12,7 @@ import com.example.crudv1.Screens.Inicio2
 import com.example.crudv1.Screens.InicioSesion
 import com.example.crudv1.Screens.MostrarFacturas
 import com.example.crudv1.Screens.MostrarReservas
-
+import com.example.crudv1.Screens.StartNow
 
 
 @Composable
@@ -28,8 +28,7 @@ fun AppNavigation() {
         composable(AppScreens.Facturas.ruta) { Facturas(navigationController) }
         composable(AppScreens.MostrarReservas.ruta) { MostrarReservas(navigationController) }
         composable(AppScreens.MostrarFacturas.ruta) { MostrarFacturas(navigationController) }
-
-
+        composable(AppScreens.StartNow.ruta) { StartNow(navigationController) }
 
     }
 }

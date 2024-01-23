@@ -171,26 +171,30 @@ fun MostrarReservas(navController: NavHostController) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(7.dp)
             ) {
-                val dateIcon = Icons.Default.DateRange
-                Icon(
-                    imageVector = dateIcon,
-                    contentDescription = null,
-                    tint = Color.Black,
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clickable { mDatePickerDialog.show() }
-                        .align(Alignment.CenterVertically)
-                )
                 OutlinedTextField(
                     value = fecha,
                     onValueChange = { fecha = it },
-                    label = { Text("Select date") },
+                    label = { Text("Select date",
+                        color = Color.White) },
                     readOnly = true,
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true
+                    modifier = Modifier.fillMaxWidth()
+                        .background(Color(41, 40, 48)),
+                    singleLine = true,
+                    leadingIcon = {
+                        val dateIcon = Icons.Default.DateRange
+                        Icon(
+                            imageVector = dateIcon,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier
+                                .size(44.dp)
+                                .clickable { mDatePickerDialog.show() }
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
                 )
-
             }
             val reservasFiltradasPorNombreYFecha =
                 if ( fecha.isNotBlank()) {
@@ -208,7 +212,9 @@ fun MostrarReservas(navController: NavHostController) {
                 Column(
                     modifier = Modifier
                         .padding(3.dp)
-                        .border(5.dp, Color(0xFF4CAF50))
+                        .border(5.dp, Color(45, 43, 50))
+                        .background(Color(41, 40, 48)),
+
                 )
                 {
 
@@ -222,7 +228,9 @@ fun MostrarReservas(navController: NavHostController) {
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
                             text = "Nombre de Usuario: ${reserva.user}",
-                            fontSize = 18.sp
+                            fontSize = 20.sp,
+                            color = Color.White
+
                         )
 
                     }
@@ -231,25 +239,29 @@ fun MostrarReservas(navController: NavHostController) {
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
                             text = "Fecha: ${reserva.fecha}",
-                            fontSize = 18.sp
+                            fontSize = 20.sp,
+                            color = Color.White
                         )
                         Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.direccion}",
-                            fontSize = 18.sp
+                            modifier = Modifier.padding(start = 30.dp, top = 10.dp),
+                            text = "Direccion: ${reserva.direccion}",
+                            fontSize = 20.sp,
+                            color = Color.White
 
                         )
                     }
                         Row() {
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.Nif}",
-                            fontSize = 18.sp
+                            text = "Nif: ${reserva.Nif}",
+                            fontSize = 20.sp,
+                            color = Color.White
                         )
                         Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.precio}",
-                            fontSize = 18.sp
+                            modifier = Modifier.padding(start = 133.dp, top = 10.dp),
+                            text = "Precio: ${reserva.precio}",
+                            fontSize = 20.sp,
+                                    color = Color.White
                         )
                     }
 
@@ -275,7 +287,7 @@ fun MostrarReservas(navController: NavHostController) {
                         modifier = Modifier.padding(start = 100.dp,end = 100.dp,top=10.dp, bottom = 10.dp)
                             .fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF4CAF50),
+                            containerColor = (Color(100, 97, 117)),
                             contentColor = Color.White
                         ),
                     ) {
