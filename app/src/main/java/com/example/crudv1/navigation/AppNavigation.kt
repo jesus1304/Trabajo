@@ -3,6 +3,7 @@ package com.example.crudv1.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.example.crudv1.Screens.MenuInicio
 import com.example.crudv1.Screens.ClienteGuardar
@@ -13,6 +14,7 @@ import com.example.crudv1.Screens.InicioSesion
 import com.example.crudv1.Screens.MostrarFacturas
 import com.example.crudv1.Screens.MostrarReservas
 import com.example.crudv1.Screens.StartNow
+import com.example.crudv1.Screens.Login
 
 
 @Composable
@@ -29,6 +31,7 @@ fun AppNavigation() {
         composable(AppScreens.MostrarReservas.ruta) { MostrarReservas(navigationController) }
         composable(AppScreens.MostrarFacturas.ruta) { MostrarFacturas(navigationController) }
         composable(AppScreens.StartNow.ruta) { StartNow(navigationController) }
+        composable(AppScreens.Login.ruta){ Login(navigationController)}
 
     }
 }
