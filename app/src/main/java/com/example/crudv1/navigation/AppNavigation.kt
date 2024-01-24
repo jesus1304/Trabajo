@@ -16,12 +16,13 @@ import com.example.crudv1.Screens.MostrarReservas
 import com.example.crudv1.Screens.StartNow
 import com.example.crudv1.Screens.Login
 import com.example.crudv1.Screens.MenuPPAL
+import com.example.crudv1.Screens.Proveedores
 
 
 @Composable
 fun AppNavigation() {
     val navigationController = rememberNavController()
-    NavHost(navController = navigationController, startDestination = AppScreens.MenuPPAL.ruta)
+    NavHost(navController = navigationController, startDestination = AppScreens.Proveedores.ruta)
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
         composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController) }
@@ -34,6 +35,7 @@ fun AppNavigation() {
         composable(AppScreens.StartNow.ruta) { StartNow(navigationController) }
         composable(AppScreens.Login.ruta){ Login(navigationController)}
         composable(AppScreens.MenuPPAL.ruta){ MenuPPAL(navigationController) }
+        composable(AppScreens.Proveedores.ruta){ Proveedores(navigationController) }
 
     }
 }
