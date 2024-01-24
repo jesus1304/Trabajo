@@ -67,7 +67,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MostrarReservas(navController: NavHostController) {
+fun MostrarFacturas(navController: NavHostController) {
     var clienteEncontrado by remember { mutableStateOf(false) }
 
 
@@ -91,7 +91,7 @@ fun MostrarReservas(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Facturas", color = Color.White)
+                    Text("Tus reservas", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("Facturas") }) {
@@ -108,9 +108,7 @@ fun MostrarReservas(navController: NavHostController) {
                 }
             )
         },
-        bottomBar = {
 
-        },
     ) { innerPadding ->
 
         Column(
@@ -118,20 +116,16 @@ fun MostrarReservas(navController: NavHostController) {
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
             .background(Color(12, 12, 12)),
-
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             var datos by remember { mutableStateOf("") }
             val context = LocalContext.current
             LaunchedEffect(Unit) {
                 val db = FirebaseFirestore.getInstance()
                 val coleccion = "factura"
-                val nombreUsuario = SessionManager.getUsername(context)
                 val fechaActual = Calendar.getInstance().time
 
                 db.collection(coleccion)
-                    .whereEqualTo("user", nombreUsuario)
                     .get()
                     .addOnSuccessListener { resultado ->
                         val reservasUsuario = resultado.documents.map { cliente ->
@@ -167,6 +161,7 @@ fun MostrarReservas(navController: NavHostController) {
                     fecha = "$anio/${mesFormateado}/$diaFormateado"
                 }, anio, mes, dia
             )
+
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -213,22 +208,21 @@ fun MostrarReservas(navController: NavHostController) {
                     modifier = Modifier
                         .padding(3.dp)
                         .border(5.dp, Color(45, 43, 50))
-                        .background(Color(41, 40, 48)),
-
-                )
+                        .background(Color(41, 40, 48)),                )
                 {
 
                     Divider(
                         modifier = Modifier.fillMaxWidth(),
                         color = Color.Gray,
-                        thickness = 3.dp
+                        thickness = 3.dp,
+
                     )
                     Row() {
 
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
                             text = "Nombre de Usuario: ${reserva.user}",
-                            fontSize = 20.sp,
+                            fontSize = 18.sp,
                             color = Color.White
 
                         )
@@ -239,29 +233,32 @@ fun MostrarReservas(navController: NavHostController) {
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
                             text = "Fecha: ${reserva.fecha}",
-                            fontSize = 20.sp,
+                            fontSize = 18.sp,
                             color = Color.White
+
                         )
                         Text(
-                            modifier = Modifier.padding(start = 30.dp, top = 10.dp),
-                            text = "Direccion: ${reserva.direccion}",
-                            fontSize = 20.sp,
-                            color = Color.White
+                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                            text = "Hora: ${reserva.direccion}",
+                            fontSize = 18.sp,                            color = Color.White
+
 
                         )
                     }
                         Row() {
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Nif: ${reserva.Nif}",
-                            fontSize = 20.sp,
+                            text = "Hora: ${reserva.Nif}",
+                            fontSize = 18.sp,
                             color = Color.White
+
                         )
                         Text(
-                            modifier = Modifier.padding(start = 133.dp, top = 10.dp),
-                            text = "Precio: ${reserva.precio}",
-                            fontSize = 20.sp,
-                                    color = Color.White
+                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                            text = "Hora: ${reserva.precio}",
+                            fontSize = 18.sp,
+                            color = Color.White
+
                         )
                     }
 
