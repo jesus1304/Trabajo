@@ -2,6 +2,7 @@ package com.example.crudv1.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.crudv1.R
 import java.time.format.TextStyle
-
 @Composable
 fun StartNow(navController: NavHostController) {
     Column(
@@ -61,47 +63,65 @@ fun StartNow(navController: NavHostController) {
                 .padding(bottom = 56.dp),
             contentScale = ContentScale.Crop
         )
-        Button(
-            onClick = { /* Acción al hacer clic en el botón */ },
+        Box(
             modifier = Modifier
-                .height(100.dp)
-                .width(300.dp)
-                .background(color = Color.Black, shape = RoundedCornerShape(12.dp)),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Text(
-                text = "START NOW!!!",
-                color = Color.Black,
-                fontWeight = FontWeight.Bold,
-                style = androidx.compose.ui.text.TextStyle(
-                    fontSize = 26.sp,
-                    fontWeight = FontWeight.Bold
+                .width(400.dp)
+                .height(400.dp)
+                .background(color = Color.Black, shape = RoundedCornerShape(82.dp))
+                .background(
+                    color = Color.Black,
+                    shape = RoundedCornerShape(72.dp)
                 )
-            )
-        }
-        Spacer(modifier = Modifier.size(66.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+                .border(
+                    width = 20.dp,
+                    color = Color.White,
+                    shape = RoundedCornerShape(82.dp)
+                )
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .padding(horizontal = 16.dp)
         ) {
-            Text(
-                text = "Do you have an account?",
-                fontSize = 20.sp,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.size(8.dp))
-            Text(
-                text = "Log in-->",
-                color = Color.Red,
-                fontSize = 20.sp,
+            Button(
+                onClick = { navController.navigate("ClienteGuardar") },
                 modifier = Modifier
-                    .clickable {
-                        navController.navigate("") // Ajusta la acción de navegación según sea necesario
-                    }
-            )
+                    .height(100.dp)
+                    .width(300.dp)
+                    .background(color = Color.Black, shape = RoundedCornerShape(12.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text(
+                    text = "START NOW!!!",
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.size(66.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Do you have an account?",
+                    fontSize = 20.sp,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text(
+                    text = "Log in-->",
+                    color = Color.Red,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate("") // Ajusta la acción de navegación según sea necesario
+                        }
+                )
+            }
         }
     }
 }
