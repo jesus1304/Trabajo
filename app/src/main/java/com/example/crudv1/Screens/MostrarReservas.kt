@@ -94,7 +94,7 @@ fun MostrarReservas(navController: NavHostController) {
                     Text("Facturas", color = Color.White)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("MenuInicio") }) {
+                    IconButton(onClick = { navController.navigate("Facturas") }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
