@@ -19,10 +19,22 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -48,6 +60,7 @@ fun MenuPPAL(navController: NavHostController) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally // Alinea el contenido horizontalmente
     ) {
+
         Text(
             text = "MERRYSERVICE",
             style = TextStyle(
@@ -55,16 +68,9 @@ fun MenuPPAL(navController: NavHostController) {
                 fontSize = 36.sp,
                 fontWeight = FontWeight.Bold
             ),
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(top = 26.dp)
         )
-        Image(
-            painter = painterResource(id = R.drawable.merryservice2),
-            contentDescription = null,
-            modifier = Modifier
-                .size(400.dp)
-                .padding(bottom = 56.dp),
-            contentScale = ContentScale.Crop
-        )
+        Spacer(modifier = Modifier.size(56.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -76,6 +82,108 @@ fun MenuPPAL(navController: NavHostController) {
                     .height(150.dp)
                     .width(150.dp)
             ) {
+                IconButton(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.facturas),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(125.dp),
+
+                        tint = (Color.Black)
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.size(36.dp))
+            Card(
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(150.dp)
+            ) {
+                IconButton(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.DateRange,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(125.dp),
+
+                        tint = (Color.Black)
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.size(10.dp))
+        Row(
+            modifier=Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+
+            Button(
+                onClick = { navController.navigate("") },
+                modifier = Modifier
+                    .height(40.dp) // Ajusta la altura según sea necesario
+                    .width(150.dp)
+            ) {
+                Text(
+                    text = "Facturas",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.size(36.dp))
+            Button(
+                onClick = { navController.navigate("") },
+                modifier = Modifier
+                    .height(40.dp) // Ajusta la altura según sea necesario
+                    .width(150.dp)
+            ) {
+                Text(
+                    text = "Horarios",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+        }
+        Spacer(modifier = Modifier.size(20.dp))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos en el Row
+        ) {
+            Card(
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(150.dp)
+            ) {
+                IconButton(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.List,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(125.dp),
+
+                        tint = (Color.Black)
+                    )
+                }
 
             }
             Spacer(modifier = Modifier.size(36.dp))
@@ -84,10 +192,67 @@ fun MenuPPAL(navController: NavHostController) {
                     .height(150.dp)
                     .width(150.dp)
             ) {
+                IconButton(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(125.dp),
+
+                        tint = (Color.Black)
+                    )
+                }
 
             }
         }
-        Spacer(modifier = Modifier.size(36.dp))
+        Spacer(modifier = Modifier.size(10.dp))
+        Row(
+            modifier=Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+
+            Button(
+                onClick = { navController.navigate("") },
+                modifier = Modifier
+                    .height(40.dp) // Ajusta la altura según sea necesario
+                    .width(150.dp)
+            ) {
+                Text(
+                    text = "Tareas",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+            }
+            Spacer(modifier = Modifier.size(36.dp))
+            Button(
+                onClick = { navController.navigate("") },
+                modifier = Modifier
+                    .height(40.dp) // Ajusta la altura según sea necesario
+                    .width(150.dp)
+            ) {
+                Text(
+                    text = "Perfil",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+            }
+        }
+        Spacer(modifier = Modifier.size(20.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -99,7 +264,19 @@ fun MenuPPAL(navController: NavHostController) {
                     .height(150.dp)
                     .width(150.dp)
             ) {
+                IconButton(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(125.dp),
 
+                        tint = (Color.Black)
+                    )
+                }
             }
             Spacer(modifier = Modifier.size(36.dp))
             Card(
@@ -107,7 +284,61 @@ fun MenuPPAL(navController: NavHostController) {
                     .height(150.dp)
                     .width(150.dp)
             ) {
+                IconButton(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier.fillMaxSize() // Llena todo el espacio de la Card
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.MailOutline,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(125.dp),
 
+                        tint = (Color.Black)
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.size(10.dp))
+        Row(
+            modifier=Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+
+            Button(
+                onClick = { navController.navigate("") },
+                modifier = Modifier
+                    .height(40.dp) // Ajusta la altura según sea necesario
+                    .width(150.dp)
+            ) {
+                Text(
+                    text = "Ajustes",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.size(36.dp))
+            Button(
+                onClick = { navController.navigate("") },
+                modifier = Modifier
+                    .height(40.dp) // Ajusta la altura según sea necesario
+                    .width(150.dp)
+            ) {
+                Text(
+                    text = "Mensajes",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
             }
         }
     }
