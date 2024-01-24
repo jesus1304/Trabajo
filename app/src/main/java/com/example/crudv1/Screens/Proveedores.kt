@@ -70,8 +70,7 @@ fun Proveedores(navController: NavHostController) {
     var optionsExpanded by remember { mutableStateOf(false) }
 
     val options = listOf(
-        "Ver Facturas Usuario",
-        "Ver todas las facturas"
+        "Lista proveedores",
 
     )
     Scaffold(
@@ -110,7 +109,7 @@ fun Proveedores(navController: NavHostController) {
                                 text = { Text(text = option) },
                                 onClick = {
                                     when (option) {
-                                        "Ver Facturas Usuario" -> navController.navigate(
+                                        "Lista proveedores" -> navController.navigate(
                                             "MostrarReservas"
                                         )
                                         "Ver todas las facturas" -> navController.navigate("MostrarFacturas")
@@ -223,32 +222,6 @@ fun Proveedores(navController: NavHostController) {
                         )
                     }
 
-                    var contraseña by rememberSaveable { mutableStateOf("") }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier.padding(4.dp)
-                    ) {
-                        OutlinedTextField(
-                            value = contraseña,
-                            onValueChange = { contraseña = it },
-                            label = { Text("Password", color = Color.White) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Gray),
-                            visualTransformation = PasswordVisualTransformation(),
-                            leadingIcon = {
-                                val icon = Icons.Default.Lock
-                                Icon(
-                                    imageVector = icon,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(44.dp),
-                                    tint = Color.White // Puedes ajustar el color del icono según tus preferencias
-                                )
-                            }
-                        )
-                    }
 
                     var correo by rememberSaveable { mutableStateOf("") }
 
@@ -304,18 +277,21 @@ fun Proveedores(navController: NavHostController) {
                     Spacer(modifier = Modifier.height(8.dp))
 
                     val db = FirebaseFirestore.getInstance()
-                    var user by remember { mutableStateOf("") }
+                    val coleccion = "proveedor"
+                    var showDialog by remember { mutableStateOf(false) }
                     var mensajeConfirmacion by remember { mutableStateOf("") }
-                    val context = LocalContext.current
-                    var reservaConfirmada by remember { mutableStateOf(false) }
 
                     Button(
                         onClick = {
-                            if (fecha.isNotEmpty()) {
+                            if (nombre.isNotEmpty() && apellido.isNotEmpty()  &&
+                                telefono.isNotEmpty() && correo.isNotEmpty()
+                            ) {
                                 showDialog = true
                             } else {
-                                mensajeConfirmacion = "Seleccione una fecha primero"
+                                mensajeConfirmacion =
+                                    "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
                             }
+
                         },
                         modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
                             .fillMaxWidth(),
@@ -343,41 +319,32 @@ fun Proveedores(navController: NavHostController) {
                             confirmButton = {
                                 Button(
                                     onClick = {
-                                        val nombreUsuario = SessionManager.getUsername(context)
+                                        val data = hashMapOf(
+                                            "nombre" to nombre,
+                                            "apellido" to apellido,
+                                            "telefono" to telefono,
+                                            "correo" to correo,
 
-                                        showDialog = false
-
-                                        val reservaData = hashMapOf(
-                                            "fecha" to fecha.toString(),
-                                            "user" to nombreUsuario.toString(),
                                             )
 
-                                        db.collection("factura")
-                                            .add(reservaData)
-                                            .addOnSuccessListener { documentReference ->
-                                                Log.d("Reserva", "Reserva exitosa. Documento ID: ${documentReference.id}")
-
-                                                mensajeConfirmacion = "Reservado"
-                                                fecha = ""
-                                                selectedHour = ""
-                                                piscina = ""
-                                                user = ""
+                                        db.collection(coleccion)
+                                            .add(data)
+                                            .addOnSuccessListener {
+                                                mensajeConfirmacion =
+                                                    "Has añadido un proveedor"
+                                                nombre = ""
+                                                apellido = ""
+                                                telefono = ""
+                                                correo = ""
 
                                                 showDialog = false
-                                                // Establecer el estado de la reserva como confirmada
-                                                reservaConfirmada = true
                                             }
                                             .addOnFailureListener { exception ->
-                                                // Error al realizar la reserva
-                                                val errorMessage = exception.message ?: "Error desconocido al realizar la reserva"
-                                                mensajeConfirmacion = "Error al realizar la reserva: $errorMessage"
+                                                mensajeConfirmacion =
+                                                    "Error al guardar: $exception"
                                                 showDialog = false
-                                                Log.e("Reserva", "Error al realizar la reserva: $errorMessage")
                                             }
-                                    },
-
-
-
+                                    }
                                 ) {
                                     Text("Confirmar")
                                 }
@@ -386,27 +353,23 @@ fun Proveedores(navController: NavHostController) {
                                 Button(
                                     onClick = {
                                         showDialog = false
-
                                     }
-
                                 ) {
                                     Text("Cancelar")
                                 }
                             }
-
                         )
                     }
 
                     if (mensajeConfirmacion.isNotEmpty()) {
                         Text(
                             text = mensajeConfirmacion,
-                            modifier = Modifier.padding(top = 5.dp),
+                            modifier = Modifier.padding(top = 15.dp),
                             color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
                         )
-
                     }
                     Image(
-                        painter = painterResource(id = R.drawable.factura2),
+                        painter = painterResource(id = R.drawable.proveedor),
                         contentDescription = "Descripción de la imagen",
                         modifier = Modifier
                             .fillMaxWidth()
