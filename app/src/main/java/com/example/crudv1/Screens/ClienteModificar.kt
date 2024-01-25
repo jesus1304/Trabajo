@@ -1,12 +1,17 @@
 package com.example.crudv1.Screens
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ArrowBack
@@ -61,17 +66,18 @@ fun ClienteModificar(navController:NavHostController) {
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = Color(12, 12, 12),
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Modificar datos")
+                    Text("Modificar datos", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description", tint = Color.White
+
                         )
                     }
                 },
@@ -80,7 +86,8 @@ fun ClienteModificar(navController:NavHostController) {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
                         Icon(
                             imageVector = Icons.Filled.Person,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description", tint = Color.White
+
                         )
                     }
                 }
@@ -89,298 +96,305 @@ fun ClienteModificar(navController:NavHostController) {
 
 
         ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
 
-            var text by rememberSaveable(stateSaver = TextFieldValue.Saver) {
-                mutableStateOf(TextFieldValue("", TextRange(0, 7)))
-            }
-        }
-    }
-    Card(
-        modifier = Modifier.padding(top = 65.dp, bottom = 50.dp),
-    ) {
-        Column(
-            modifier = Modifier
 
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .padding(innerPadding)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(Color(12, 12, 12))
 
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.Center
+        )
+        {
+            Card(
+                modifier = Modifier.padding(top = 65.dp, bottom = 50.dp),
+
             ) {
-                var user by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
+                Column(
+                    modifier = Modifier
+
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    val icon = Icons.Default.AccountCircle
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
 
-
-                    OutlinedTextField(
-                        value = user,
-                        onValueChange = { user = it },
-                        label = { Text("User") },
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                var nombre by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Person
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-
-                    OutlinedTextField(
-                        value = nombre,
-                        onValueChange = { nombre = it },
-                        label = { Text("Nombre") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                var apellido by rememberSaveable { mutableStateOf("") }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Person
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-                    OutlinedTextField(
-                        value = apellido,
-                        onValueChange = { apellido = it },
-                        label = { Text("Apellido") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                var contraseña by rememberSaveable { mutableStateOf("") }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Lock
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-                    OutlinedTextField(
-                        value = contraseña,
-                        onValueChange = { contraseña = it },
-                        label = { Text("Password") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-                        visualTransformation = PasswordVisualTransformation()
-                    )
-                }
-                var correo by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(4.dp)
-                ) {
-                    val icon = Icons.Default.Email
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-
-                    OutlinedTextField(
-                        value = correo,
-                        onValueChange = { correo = it },
-                        label = { Text("Correo") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
-                val icon = Icons.Default.Phone
-                var telefono by rememberSaveable { mutableStateOf("") }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(7.dp)
-                )
-                {
-
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                        tint = Color.Black,
-                        modifier = Modifier.size(44.dp),
-                    )
-                    OutlinedTextField(
-                        value = telefono,
-                        onValueChange = { telefono = it },
-                        label = { Text("Telefono") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true,
-
-                        )
-                }
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        var user by rememberSaveable { mutableStateOf("") }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            val icon = Icons.Default.AccountCircle
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(44.dp),
+                            )
 
 
-                val context = LocalContext.current
-                var showDialog by remember { mutableStateOf(false) }
-                var mensajeConfirmacion by remember { mutableStateOf("") }
+                            OutlinedTextField(
+                                value = user,
+                                onValueChange = { user = it },
+                                label = { Text("User") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
 
-                LaunchedEffect(Unit) {
-                    val db = FirebaseFirestore.getInstance()
-                    val coleccion = "clientes"
-                    val nombreUsuario = SessionManager.getUsername(context)
-
-                    db.collection(coleccion)
-                        .whereEqualTo("user", nombreUsuario)
-                        .get()
-                        .addOnSuccessListener { querySnapshot ->
-                            for (document in querySnapshot) {
-                                user = document.getString("user") ?: ""
-                                nombre = document.getString("nombre") ?: ""
-                                apellido = document.getString("apellido") ?: ""
-                                correo = document.getString("correo") ?: ""
-                                contraseña = document.getString("contraseña") ?: ""
-                                telefono = document.getString("telefono") ?: ""
-                            }
+                                )
                         }
-                        .addOnFailureListener {
-                            // Manejar el error si no se pueden obtener los datos del usuario
+                        var nombre by rememberSaveable { mutableStateOf("") }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            val icon = Icons.Default.Person
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(44.dp),
+                            )
+
+                            OutlinedTextField(
+                                value = nombre,
+                                onValueChange = { nombre = it },
+                                label = { Text("Nombre") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+
+                                )
                         }
-                }
+                        var apellido by rememberSaveable { mutableStateOf("") }
 
-                Button(
-                    onClick = {
-                        if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() && correo.isNotEmpty() && telefono.isNotEmpty()) {
-                            showDialog = true
-                        } else {
-                            mensajeConfirmacion = "Por favor, completa todos los campos"
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            val icon = Icons.Default.Person
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(44.dp),
+                            )
+                            OutlinedTextField(
+                                value = apellido,
+                                onValueChange = { apellido = it },
+                                label = { Text("Apellido") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+
+                                )
                         }
-                    },
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp)
-                        .fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF4CAF50),
-                        contentColor = Color.White
-                    ),
-                ) {
-                    Text(
-                        text = "Modificar", fontSize = 18.sp
-                    )
-                }
+                        var contraseña by rememberSaveable { mutableStateOf("") }
 
-                if (showDialog) {
-                    AlertDialog(
-                        onDismissRequest = {
-                            showDialog = false
-                        },
-                        title = {
-                            Text("Confirmar envío")
-                        },
-                        text = {
-                            Text("¿Estás seguro de enviar los datos?")
-                        },
-                        confirmButton = {
-                            Button(
-                                onClick = {
-                                    val data = hashMapOf(
-                                        "nombre" to nombre,
-                                        "apellido" to apellido,
-                                        "contraseña" to contraseña,
-                                        "telefono" to telefono,
-                                        "correo" to correo,
-                                        "user" to user
-                                    )
-                                    val db = FirebaseFirestore.getInstance()
-                                    val coleccion = "clientes"
-                                    val nombreUsuario = SessionManager.getUsername(context)
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            val icon = Icons.Default.Lock
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(44.dp),
+                            )
+                            OutlinedTextField(
+                                value = contraseña,
+                                onValueChange = { contraseña = it },
+                                label = { Text("Password") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                visualTransformation = PasswordVisualTransformation()
+                            )
+                        }
+                        var correo by rememberSaveable { mutableStateOf("") }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            val icon = Icons.Default.Email
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(44.dp),
+                            )
 
-                                    db.collection(coleccion)
-                                        .whereEqualTo("user", nombreUsuario)
-                                        .get()
-                                        .addOnSuccessListener { querySnapshot ->
-                                            if (!querySnapshot.isEmpty) {
-                                                for (document in querySnapshot) {
-                                                    db.collection(coleccion)
-                                                        .document(document.id)
-                                                        .set(data)
-                                                        .addOnSuccessListener {
-                                                            mensajeConfirmacion = "Datos modificados"
-                                                            showDialog = false // Cierra el diálogo al confirmar
+                            OutlinedTextField(
+                                value = correo,
+                                onValueChange = { correo = it },
+                                label = { Text("Correo") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+
+                                )
+                        }
+                        val icon = Icons.Default.Phone
+                        var telefono by rememberSaveable { mutableStateOf("") }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(7.dp)
+                        )
+                        {
+
+                            Icon(
+                                imageVector = icon,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(44.dp),
+                            )
+                            OutlinedTextField(
+                                value = telefono,
+                                onValueChange = { telefono = it },
+                                label = { Text("Telefono") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+
+                                )
+                        }
+
+
+                        val context = LocalContext.current
+                        var showDialog by remember { mutableStateOf(false) }
+                        var mensajeConfirmacion by remember { mutableStateOf("") }
+
+                        LaunchedEffect(Unit) {
+                            val db = FirebaseFirestore.getInstance()
+                            val coleccion = "cliente"
+                            val nombreUsuario = SessionManager.getUsername(context)
+
+                            db.collection(coleccion)
+                                .whereEqualTo("user", nombreUsuario)
+                                .get()
+                                .addOnSuccessListener { querySnapshot ->
+                                    for (document in querySnapshot) {
+                                        user = document.getString("user") ?: ""
+                                        nombre = document.getString("nombre") ?: ""
+                                        apellido = document.getString("apellido") ?: ""
+                                        correo = document.getString("correo") ?: ""
+                                        contraseña = document.getString("contraseña") ?: ""
+                                        telefono = document.getString("telefono") ?: ""
+                                    }
+                                }
+                                .addOnFailureListener {
+                                    // Manejar el error si no se pueden obtener los datos del usuario
+                                }
+                        }
+
+                        Button(
+                            onClick = {
+                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() && correo.isNotEmpty() && telefono.isNotEmpty()) {
+                                    showDialog = true
+                                } else {
+                                    mensajeConfirmacion = "Por favor, completa todos los campos"
+                                }
+                            },
+                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp)
+                                .fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF4CAF50),
+                                contentColor = Color.White
+                            ),
+                        ) {
+                            Text(
+                                text = "Modificar", fontSize = 18.sp
+                            )
+                        }
+
+                        if (showDialog) {
+                            AlertDialog(
+                                onDismissRequest = {
+                                    showDialog = false
+                                },
+                                title = {
+                                    Text("Confirmar envío")
+                                },
+                                text = {
+                                    Text("¿Estás seguro de enviar los datos?")
+                                },
+                                confirmButton = {
+                                    Button(
+                                        onClick = {
+                                            val data = hashMapOf(
+                                                "nombre" to nombre,
+                                                "apellido" to apellido,
+                                                "contraseña" to contraseña,
+                                                "telefono" to telefono,
+                                                "correo" to correo,
+                                                "user" to user
+                                            )
+                                            val db = FirebaseFirestore.getInstance()
+                                            val coleccion = "clientes"
+                                            val nombreUsuario = SessionManager.getUsername(context)
+
+                                            db.collection(coleccion)
+                                                .whereEqualTo("user", nombreUsuario)
+                                                .get()
+                                                .addOnSuccessListener { querySnapshot ->
+                                                    if (!querySnapshot.isEmpty) {
+                                                        for (document in querySnapshot) {
+                                                            db.collection(coleccion)
+                                                                .document(document.id)
+                                                                .set(data)
+                                                                .addOnSuccessListener {
+                                                                    mensajeConfirmacion =
+                                                                        "Datos modificados"
+                                                                    showDialog =
+                                                                        false // Cierra el diálogo al confirmar
+                                                                }
+                                                                .addOnFailureListener { exception ->
+                                                                    mensajeConfirmacion =
+                                                                        "Error al modificar: $exception"
+                                                                }
                                                         }
-                                                        .addOnFailureListener { exception ->
-                                                            mensajeConfirmacion = "Error al modificar: $exception"
-                                                        }
+                                                    } else {
+                                                        mensajeConfirmacion =
+                                                            "No se encontraron datos para modificar"
+                                                    }
                                                 }
-                                            } else {
-                                                mensajeConfirmacion = "No se encontraron datos para modificar"
-                                            }
+                                                .addOnFailureListener { exception ->
+                                                    mensajeConfirmacion =
+                                                        "Error al buscar el documento: $exception"
+                                                }
                                         }
-                                        .addOnFailureListener { exception ->
-                                            mensajeConfirmacion = "Error al buscar el documento: $exception"
+                                    ) {
+                                        Text("Confirmar")
+                                    }
+                                },
+                                dismissButton = {
+                                    Button(
+                                        onClick = {
+                                            showDialog = false // Cierra el diálogo al cancelar
                                         }
+                                    ) {
+                                        Text("Cancelar")
+                                    }
                                 }
-                            ) {
-                                Text("Confirmar")
-                            }
-                        },
-                        dismissButton = {
-                            Button(
-                                onClick = {
-                                    showDialog = false // Cierra el diálogo al cancelar
-                                }
-                            ) {
-                                Text("Cancelar")
-                            }
+                            )
                         }
-                    )
-                }
 
-                if (mensajeConfirmacion.isNotEmpty()) {
-                    Text(
-                        text = mensajeConfirmacion,
-                        modifier = Modifier.padding(top = 15.dp),
-                        color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
-                    )
+                        if (mensajeConfirmacion.isNotEmpty()) {
+                            Text(
+                                text = mensajeConfirmacion,
+                                modifier = Modifier.padding(top = 15.dp),
+                                color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
+                            )
 
+                        }
+                    }
                 }
             }
         }
     }
+
 }
-
-
