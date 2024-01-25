@@ -67,7 +67,7 @@ fun StartNow(navController: NavHostController) {
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 86.dp)
+                modifier = Modifier.padding(bottom = 50.dp,top=30.dp)
             )
 
             // Imagen
@@ -82,7 +82,7 @@ fun StartNow(navController: NavHostController) {
 
             // Botón "START NOW!!!"
             Button(
-                onClick = { navController.navigate("ClienteGuardar") },
+                onClick = { navController.navigate("Login") },
                 modifier = Modifier
                     .padding(bottom = 50.dp)
                     .height(100.dp)

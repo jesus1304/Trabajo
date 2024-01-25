@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Build
@@ -58,6 +60,7 @@ fun MenuPPAL(navController: NavHostController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(Color.Black)
     ) {
         Column(
@@ -78,7 +81,7 @@ fun MenuPPAL(navController: NavHostController) {
                 ),
                 modifier = Modifier.padding(top = 16.dp)
             )
-            Spacer(modifier = Modifier.size(56.dp))
+            Spacer(modifier = Modifier.size(25.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,7 +152,7 @@ fun MenuPPAL(navController: NavHostController) {
                 }
                 Spacer(modifier = Modifier.size(36.dp))
                 Button(
-                    onClick = { navController.navigate("") },
+                    onClick = { navController.navigate("Proveedores") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)
@@ -254,11 +257,10 @@ fun MenuPPAL(navController: NavHostController) {
 
                 }
             }
-            Spacer(modifier = Modifier.size(150.dp))
+            Spacer(modifier = Modifier.size(20.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
                     .background(Color.White),
                 contentAlignment = Alignment.BottomCenter
             ) {

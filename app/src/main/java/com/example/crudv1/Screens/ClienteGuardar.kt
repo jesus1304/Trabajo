@@ -69,7 +69,6 @@ fun ClienteGuardar(navController:NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Registro", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("Login") }) {val icon = Icons.Default.AccountCircle

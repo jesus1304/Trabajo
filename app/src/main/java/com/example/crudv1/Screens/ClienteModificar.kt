@@ -70,7 +70,6 @@ fun ClienteModificar(navController:NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Modificar datos", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
@@ -317,12 +316,12 @@ fun ClienteModificar(navController:NavHostController) {
                                     mensajeConfirmacion = "Por favor, completa todos los campos"
                                 }
                             },
-                            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp)
+                            modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
                                 .fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF4CAF50),
+                                containerColor = Color.Gray,
                                 contentColor = Color.White
-                            ),
+                            )
                         ) {
                             Text(
                                 text = "Modificar", fontSize = 18.sp
@@ -352,7 +351,7 @@ fun ClienteModificar(navController:NavHostController) {
                                                 "user" to user
                                             )
                                             val db = FirebaseFirestore.getInstance()
-                                            val coleccion = "clientes"
+                                            val coleccion = "cliente"
                                             val nombreUsuario = SessionManager.getUsername(context)
 
                                             db.collection(coleccion)
