@@ -23,7 +23,7 @@ import com.example.crudv1.Screens.Proveedores
 @Composable
 fun AppNavigation() {
     val navigationController = rememberNavController()
-    NavHost(navController = navigationController, startDestination = AppScreens.Login.ruta)
+    NavHost(navController = navigationController, startDestination = AppScreens.StartNow.ruta)
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
         composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController) }
