@@ -1,23 +1,31 @@
 package com.example.crudv1.Screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
+import com.example.crudv1.R
+import com.example.crudv1.ui.theme.typography
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,108 +34,188 @@ fun Login(navController: NavHostController) {
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .background(color = Color(0xFF121212))
     ) {
-        TextField(
-            value = email,
-            onValueChange = { email = it },
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            placeholder = { Text("Email") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            ),
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) }
-        )
+                .fillMaxSize()
+                .background(color = Color(0xFF121212))
+        ) {
 
-        TextField(
-            value = password,
-            onValueChange = { password = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            placeholder = { Text("Password") },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            trailingIcon = {
-                IconButton(
-                    onClick = { isPasswordVisible = !isPasswordVisible },
-                    modifier = Modifier.semantics {
-                        if (isPasswordVisible) {
+            Text(
+                text = "MERRYSERVICE",
+                color = Color.White,
+                style = typography.bodyLarge.copy(fontSize = 40.sp),
+                modifier = Modifier.padding(top = 40.dp, start = 60.dp)
+            )
 
-                        } else {
+            TextField(
+                value = email,
+                onValueChange = { email = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 80.dp, start = 24.dp, end = 24.dp)
+                    .background(color = Color(0xFF909090), shape = RoundedCornerShape(12.dp)),
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color(0xFF121212),
+                    unfocusedIndicatorColor = Color(0xFF121212),
+                    disabledIndicatorColor = Color(0xFF121212),
+                    errorIndicatorColor = Color(0xFF121212),
+                    cursorColor = Color(0xFF121212),
+
+
+                    ),
+                placeholder = { Text("Email",) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) }
+            )
+
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 24.dp, end = 24.dp, top = 24.dp)
+                    .background(color = Color(0xFF909090), shape = RoundedCornerShape(12.dp)),
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color(0xFF121212),
+                    unfocusedIndicatorColor = Color(0xFF121212),
+                    disabledIndicatorColor = Color(0xFF121212),
+                    errorIndicatorColor = Color(0xFF121212),
+                    cursorColor = Color(0xFF121212),
+                ),
+                placeholder = { Text("Password") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
+                trailingIcon = {
+                    IconButton(
+                        onClick = { isPasswordVisible = !isPasswordVisible },
+                        modifier = Modifier.semantics {
+                            if (isPasswordVisible) {
+
+                            } else {
+
+                            }
 
                         }
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.candado),
+                            contentDescription = "candado"
+                        )
                     }
-                ) {
-                    Icon(
-                        imageVector = if (isPasswordVisible) Icons.Filled.Email else Icons.Filled.Email,
-                        contentDescription = null
-                    )
                 }
+            )
+            Button(
+                onClick = {
+
+                },
+                modifier = Modifier
+                    .background(color = Color(0xFF121212), shape = RoundedCornerShape(12.dp))
+                    .fillMaxWidth()
+                    .padding(top = 24.dp, start = 24.dp, end = 24.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(12.dp)
+            )
+            {
+
+                Text("Sign In", color = Color(0xFF121212))
             }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 30.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Divider(
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(1.dp)
+                        .padding(start = 24.dp)
+                )
+                Text(
+                    text = "OR",
+                    color = Color.Gray,
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
+                Divider(
+                    color = Color.Gray,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(1.dp)
+                        .padding(end = 24.dp)
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 74.dp, top = 30.dp, end = 24.dp),
+                horizontalArrangement = Arrangement.spacedBy(44.dp),
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.facebook),
+                    contentDescription = "Logo de Facebook",
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.google),
+                    contentDescription = "Logo de Google"
+                )
+
+                Image(
+                    painter = painterResource(id = R.drawable.instagram),
+                    contentDescription = "Logo de Instagram"
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    "Don´t have an account? ",
+                    color = Color(0xFF909090)
+                )
+                Text(
+                    "Sign Up",
+                    color = Color.Red
+                )
+            }
+        }
+        // Fondo de la pantalla
+        Image(
+            painter = painterResource(id = R.drawable.inicio),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxSize()
+                .zIndex(-1f)
+                .clip(MaterialTheme.shapes.medium),
+            contentScale = ContentScale.Crop
         )
 
-        Button(
-            onClick = {
-                // Handle Sign In button click
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .height(48.dp)
-                .background(Color(0xFF909090))
-        ) {
-            Text("Sign In", color = Color(0xFF121212))
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Divider(color = Color(0xFF909090), thickness = 1.dp)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            SocialButton(icon = Icons.Default.MailOutline, onClick = {
-                // Handle Email button click
-            })
-            SocialButton(icon = Icons.Default.Face, onClick = {
-                // Handle Facebook button click
-            })
-            SocialButton(icon = Icons.Filled.Email, onClick = {
-                // Handle Instagram button click
-            })
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(
-                "Do you have an account? ",
-                color = Color(0xFF909090)
-            )
-            Text(
-                "Log In",
-                color = Color.Red
-            )
-        }
+        // Resto de tu contenido va aquí
+        // Puedes colocar otros composable encima de la imagen de fondo
     }
 }
+
+
 
 @Composable
 fun SocialButton(icon: ImageVector, onClick: () -> Unit) {
