@@ -1,33 +1,21 @@
 package com.example.crudv1.Screens
 
 import android.app.DatePickerDialog
-import android.util.Log
 import android.widget.DatePicker
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,24 +32,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.crudv1.navigation.SessionManager
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.Locale
 
@@ -148,7 +128,7 @@ fun MostrarFacturas(navController: NavHostController) {
             }
 
 
-
+            var nombreFiltrar by remember { mutableStateOf("") }
             var fecha by remember { mutableStateOf("") }
             val mCalendar: Calendar = Calendar.getInstance()
             val anio: Int = mCalendar.get(Calendar.YEAR)
@@ -161,8 +141,15 @@ fun MostrarFacturas(navController: NavHostController) {
                     fecha = "$anio/${mesFormateado}/$diaFormateado"
                 }, anio, mes, dia
             )
-
-
+            TextField(
+                value = nombreFiltrar,
+                onValueChange = { nombreFiltrar = it },
+                label = { Text("Ingrese el cliente") },
+                modifier = Modifier
+                    .padding(top = 20.dp, start = 5.dp)
+                    .fillMaxWidth()
+                    .background(Color(41, 40, 48)),
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
@@ -192,13 +179,17 @@ fun MostrarFacturas(navController: NavHostController) {
                 )
             }
             val reservasFiltradasPorNombreYFecha =
-                if ( fecha.isNotBlank()) {
+                if (nombreFiltrar.isNotBlank() || fecha.isNotBlank()) {
                     reservas.value.filter {
+                        (it.user.equals(
+                            nombreFiltrar,
+                            ignoreCase = true
+                        ) || nombreFiltrar.isBlank()) &&
                                 (it.fecha.equals(
                                     fecha,
                                     ignoreCase = true
                                 ) || fecha.isBlank())
-                    }
+                    }.sortedWith(compareBy({ it.fecha }))
                 } else {
                     reservas.value.sortedWith(compareBy({ it.fecha }))
                 }
@@ -208,7 +199,7 @@ fun MostrarFacturas(navController: NavHostController) {
                     modifier = Modifier
                         .padding(3.dp)
                         .border(5.dp, Color(45, 43, 50))
-                        .background(Color(41, 40, 48)),                )
+                        .background(Color(41, 40, 48)),)
                 {
 
                     Divider(
@@ -262,98 +253,6 @@ fun MostrarFacturas(navController: NavHostController) {
                         )
                     }
 
-                    val db = FirebaseFirestore.getInstance()
-                    val coleccion = "factura"
-                    var user by remember { mutableStateOf("") }
-                    var mensajeConfirmacion by remember { mutableStateOf("") }
-                    var fechaSeleccionada by remember { mutableStateOf("") }
-                    var precioSeleccionada by remember { mutableStateOf("") }
-                    var direccionSeleccionada by remember { mutableStateOf("") }
-                    var NifSeleccionada by remember { mutableStateOf("") }
-                    var showDialog by remember { mutableStateOf(false) }
-
-                    Button(
-                        onClick = {
-                            fechaSeleccionada = reserva.fecha
-                            precioSeleccionada = reserva.precio
-                            direccionSeleccionada = reserva.direccion
-                            NifSeleccionada = reserva.Nif
-                            user = reserva.user
-                            showDialog = true
-                        },
-                        modifier = Modifier.padding(start = 100.dp,end = 100.dp,top=10.dp, bottom = 10.dp)
-                            .fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = (Color(100, 97, 117)),
-                            contentColor = Color.White
-                        ),
-                    ) {
-                        Text(
-                            text = "Cancelar Reserva",
-                            fontSize = 18.sp
-                        )
-                    }
-
-                    if (showDialog) {
-                        AlertDialog(
-                            onDismissRequest = { showDialog = false },
-                            title = { Text("Confirmar eliminación") },
-                            text = { Text("¿Estás seguro de eliminar esta reserva?") },
-                            confirmButton = {
-                                Button(
-                                    onClick = {
-                                        val nombreUsuario = SessionManager.getUsername(context)
-
-                                        db.collection(coleccion)
-                                            .whereEqualTo("user", nombreUsuario)
-                                            .whereEqualTo("fecha", fechaSeleccionada)
-                                            .whereEqualTo("direccion", direccionSeleccionada)
-                                            .whereEqualTo("precio", precioSeleccionada)
-                                            .whereEqualTo("Nif", NifSeleccionada)
-
-                                            .get()
-                                            .addOnSuccessListener { querySnapshot ->
-                                                for (document in querySnapshot) {
-                                                    db.collection(coleccion)
-                                                        .document(document.id)
-                                                        .delete()
-                                                        .addOnSuccessListener {
-                                                            mensajeConfirmacion = "Reserva cancelada correctamente"
-                                                        }
-                                                        .addOnFailureListener { exception ->
-                                                            mensajeConfirmacion = "Error al cancelar la reserva: $exception"
-                                                        }
-                                                }
-                                            }
-                                            .addOnFailureListener { exception ->
-                                                mensajeConfirmacion = "Error al buscar la reserva: $exception"
-                                            }
-
-                                        showDialog = false
-                                    },
-
-                                ) {
-                                    Text("Confirmar")
-                                }
-                            },
-                            dismissButton = {
-                                Button(
-                                    onClick = { showDialog = false
-                                    }
-                                ) {
-                                    Text("Cancelar")
-                                }
-                            }
-                        )
-                    }
-
-                    if (mensajeConfirmacion.isNotEmpty()) {
-                        Text(
-                            text = mensajeConfirmacion,
-                            modifier = Modifier.padding(top = 30.dp),
-                            color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Blue
-                        )
-                    }
                 }
             }
         }

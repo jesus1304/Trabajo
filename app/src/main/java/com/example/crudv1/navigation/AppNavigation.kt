@@ -3,23 +3,24 @@ package com.example.crudv1.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.example.crudv1.Screens.MenuInicio
 import com.example.crudv1.Screens.ClienteGuardar
 import com.example.crudv1.Screens.ClienteModificar
 import com.example.crudv1.Screens.Facturas
 import com.example.crudv1.Screens.Inicio2
 import com.example.crudv1.Screens.InicioSesion
-import com.example.crudv1.Screens.Login
-import com.example.crudv1.Screens.MenuInicio
 import com.example.crudv1.Screens.MostrarFacturas
 import com.example.crudv1.Screens.MostrarReservas
 import com.example.crudv1.Screens.StartNow
+import com.example.crudv1.Screens.Login
 
 
 @Composable
 fun AppNavigation() {
     val navigationController = rememberNavController()
-    NavHost(navController = navigationController, startDestination = AppScreens.Login.ruta)
+    NavHost(navController = navigationController, startDestination = AppScreens.InicioSesion.ruta)
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
         composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController) }
