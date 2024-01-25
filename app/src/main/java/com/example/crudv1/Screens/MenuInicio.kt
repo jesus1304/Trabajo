@@ -3,6 +3,7 @@ package com.example.crudv1.Screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -38,10 +43,15 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -59,22 +69,23 @@ import com.google.firebase.firestore.FirebaseFirestore
 fun MenuInicio(navController: NavHostController) {
 
 
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    containerColor = Color(12, 12, 12),
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Perfil")
+                    Text("Perfil", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("Inicio") }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description",
+                            tint = Color.White
+
                         )
                     }
                 },
@@ -87,12 +98,55 @@ fun MenuInicio(navController: NavHostController) {
 
         },
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-         
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .padding(innerPadding)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(Color(12, 12, 12))
+
+        )
+        {
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                val rainbowColorsBrush = remember {
+                    Brush.sweepGradient(
+                        listOf(
+                            Color(0xFF9575CD),
+                            Color(0xFFBA68C8),
+                            Color(0xFFE57373),
+                            Color(0xFFFFB74D),
+                            Color(0xFFFFF176),
+                            Color(0xFFAED581),
+                            Color(0xFF4DD0E1),
+                            Color(0xFF9575CD)
+                        )
+                    )
+                }
+                val borderWidth = 4.dp
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.proveedor),
+                        contentDescription = "Descripción de la imagen",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(200.dp) // Tamaño aumentado
+                            .clip(CircleShape)
+                            .border(
+                                BorderStroke(borderWidth, rainbowColorsBrush),
+                                CircleShape
+                            )
+                            .padding(borderWidth)
+                    )
+                }
+
 
                 Column(
                     modifier = Modifier
@@ -103,11 +157,14 @@ fun MenuInicio(navController: NavHostController) {
 
                     Button(
                         onClick = {
-                            navController.navigate("InicioSesion")                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(2.dp),
-                        contentPadding = PaddingValues(16.dp)
+                            navController.navigate("InicioSesion")
+                        },
+                        modifier = Modifier.padding(start = 10.dp, top = 12.dp)
+                            .fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Gray,
+                            contentColor = Color.White
+                        )
                     ) {
                         Text(
                             text = "Cerrar sesión",
@@ -119,19 +176,21 @@ fun MenuInicio(navController: NavHostController) {
 
                     Button(
                         onClick = { navController.navigate("ClienteModificar") },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(2.dp),
-                        contentPadding = PaddingValues(16.dp),
-                        content = {
-                            Text(
-                                text = "Modificar perfil",
-                                color = Color.White,
-                                fontSize = 20.sp,
-                                style = TextStyle.Default
-                            )
-                        }
-                    )
+                        modifier = Modifier.padding(start = 10.dp, top = 12.dp)
+                            .fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Gray,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = "Modificar perfil",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            style = TextStyle.Default
+                        )
+                    }
+
                     val db = FirebaseFirestore.getInstance()
                     val coleccion = "clientes"
                     var mensajeBorrado by remember { mutableStateOf("") }
@@ -140,11 +199,14 @@ fun MenuInicio(navController: NavHostController) {
 
                     Button(
                         onClick = { showDialog = true },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(2.dp),
-                        contentPadding = PaddingValues(16.dp)
+                        modifier = Modifier.padding(start = 10.dp, top = 12.dp)
+                            .fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Gray,
+                            contentColor = Color.White
+                        )
                     ) {
+
                         Text(
                             text = "Eliminar perfil",
                             color = Color.White,
@@ -173,21 +235,24 @@ fun MenuInicio(navController: NavHostController) {
                                                         .document(document.id)
                                                         .delete()
                                                         .addOnSuccessListener {
-                                                            mensajeBorrado = "Datos borrados correctamente"
+                                                            mensajeBorrado =
+                                                                "Datos borrados correctamente"
                                                         }
                                                         .addOnFailureListener { exception ->
-                                                            mensajeBorrado = "Error al borrar: $exception"
+                                                            mensajeBorrado =
+                                                                "Error al borrar: $exception"
                                                         }
                                                 }
                                             }
                                             .addOnFailureListener { exception ->
-                                                mensajeBorrado = "Error al buscar el documento: $exception"
+                                                mensajeBorrado =
+                                                    "Error al buscar el documento: $exception"
                                             }
 
                                         showDialog = false
                                     },
 
-                                ) {
+                                    ) {
                                     Text("Confirmar")
                                 }
                             },
@@ -204,3 +269,4 @@ fun MenuInicio(navController: NavHostController) {
             }
         }
     }
+}
