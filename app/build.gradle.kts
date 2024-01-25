@@ -75,4 +75,5 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation ("com.google.maps.android:maps-compose:4.3.1")
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
 }

@@ -151,7 +151,7 @@ fun Login(navController: NavHostController) {
                                         val isLoggedIn =
                                             SessionManager.isLoggedIn(context)
                                         if (isLoggedIn) {
-                                            navController.navigate("Facturas") // Navega a la página de inicio
+                                            navController.navigate("MenuPPAL") // Navega a la página de inicio
 
                                         }
                                         if (!credentialsMatched) {

@@ -132,7 +132,7 @@ fun MenuPPAL(navController: NavHostController) {
             ) {
 
                 Button(
-                    onClick = { navController.navigate("StartNow") },
+                    onClick = { navController.navigate("Facturas") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)
