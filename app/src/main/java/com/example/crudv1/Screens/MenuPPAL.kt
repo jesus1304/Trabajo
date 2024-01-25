@@ -76,7 +76,7 @@ fun MenuPPAL(navController: NavHostController) {
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(top = 76.dp)
+                modifier = Modifier.padding(top = 16.dp)
             )
             Spacer(modifier = Modifier.size(56.dp))
             Row(
@@ -132,7 +132,7 @@ fun MenuPPAL(navController: NavHostController) {
             ) {
 
                 Button(
-                    onClick = { navController.navigate("StartNow") },
+                    onClick = { navController.navigate("Facturas") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)

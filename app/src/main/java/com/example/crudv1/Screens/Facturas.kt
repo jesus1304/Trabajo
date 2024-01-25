@@ -23,8 +23,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -183,7 +185,7 @@ fun Facturas(navController: NavHostController) {
                                 .fillMaxWidth()
                                 .background(Color.Gray),
                             leadingIcon = {
-                                val icon = Icons.Default.AccountCircle
+                                val icon = Icons.Default.LocationOn
                                 Icon(
                                     imageVector = icon,
                                     contentDescription = null,
@@ -236,7 +238,7 @@ fun Facturas(navController: NavHostController) {
                                 .fillMaxWidth()
                                 .background(Color.Gray),
                             leadingIcon = {
-                                val icon = Icons.Default.AccountCircle
+                                val icon = Icons.Default.Star
                                 Icon(
                                     imageVector = icon,
                                     contentDescription = null,
