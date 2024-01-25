@@ -1,11 +1,14 @@
 package com.example.crudv1.Screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
@@ -24,14 +28,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.example.crudv1.R
+import com.example.crudv1.navigation.SessionManager
 import com.example.crudv1.ui.theme.typography
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Login(navController: NavHostController) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var user by remember { mutableStateOf("") }
+    var contraseña by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(false) }
 
     Box(
@@ -53,8 +59,8 @@ fun Login(navController: NavHostController) {
             )
 
             TextField(
-                value = email,
-                onValueChange = { email = it },
+                value = user,
+                onValueChange = { user = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 80.dp, start = 24.dp, end = 24.dp)
@@ -68,17 +74,17 @@ fun Login(navController: NavHostController) {
 
 
                     ),
-                placeholder = { Text("Email",) },
+                placeholder = { Text("User",) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 ),
-                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = null) }
+                leadingIcon = { Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null) }
             )
 
             TextField(
-                value = password,
-                onValueChange = { password = it },
+                value = contraseña,
+                onValueChange = { contraseña = it },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 24.dp, end = 24.dp, top = 24.dp)
@@ -114,9 +120,52 @@ fun Login(navController: NavHostController) {
                     }
                 }
             )
+            val db = FirebaseFirestore.getInstance()
+            val coleccion = "cliente"
+
+            var mensajeConfirmacion by remember { mutableStateOf("") }
+            val context = LocalContext.current
+
             Button(
                 onClick = {
+                    if (user.isNotBlank() && contraseña.isNotBlank()) {
+                    } else {
+                    }
+                    db.collection(coleccion)
+                        .whereEqualTo("user", user.toString())
+                        .get()
+                        .addOnSuccessListener { querySnapshot ->
+                            if (!querySnapshot.isEmpty) {
+                                var credentialsMatched = false
+                                for (documentSnapshot in querySnapshot) {
+                                    val storedUser = documentSnapshot.getString("user")
+                                    val storedContraseña =
+                                        documentSnapshot.getString("contraseña")
+                                    if (user == storedUser && contraseña == storedContraseña) {
+                                        credentialsMatched = true
+                                        SessionManager.setLoggedIn(context, true)
+                                        SessionManager.setUsername(
+                                            context,
+                                            user
+                                        )
+                                        val isLoggedIn =
+                                            SessionManager.isLoggedIn(context)
+                                        if (isLoggedIn) {
+                                            navController.navigate("Facturas") // Navega a la página de inicio
 
+                                        }
+                                        if (!credentialsMatched) {
+                                            mensajeConfirmacion = "Usuario o contraseña incorrectos"
+                                        }
+                                    } else {
+                                    }
+                                }
+                            }
+
+                        }
+                        .addOnFailureListener {
+                            mensajeConfirmacion = "Error al verificar los datos"
+                        }
                 },
                 modifier = Modifier
                     .background(color = Color(0xFF121212), shape = RoundedCornerShape(12.dp))
@@ -127,10 +176,9 @@ fun Login(navController: NavHostController) {
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(12.dp)
-            )
-            {
-
+            ) {
                 Text("Sign In", color = Color(0xFF121212))
+
             }
 
             Row(
@@ -195,7 +243,10 @@ fun Login(navController: NavHostController) {
                 )
                 Text(
                     "Sign Up",
-                    color = Color.Red
+                    color = Color.Red,
+                    modifier = Modifier.clickable {
+                        navController.navigate("ClienteGuardar")
+                    }
                 )
             }
         }

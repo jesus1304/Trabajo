@@ -72,7 +72,7 @@ fun ClienteGuardar(navController:NavHostController) {
                     Text("Registro", color = Color.White)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate("InicioSesion") }) {val icon = Icons.Default.AccountCircle
+                    IconButton(onClick = { navController.navigate("Login") }) {val icon = Icons.Default.AccountCircle
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
