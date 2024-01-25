@@ -81,7 +81,7 @@ fun Proveedores(navController: NavHostController) {
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 title = {
-                    Text("Facturas", color = Color.White)
+                    Text("Proveedores", color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate("MenuInicio") }) {
@@ -110,9 +110,8 @@ fun Proveedores(navController: NavHostController) {
                                 onClick = {
                                     when (option) {
                                         "Lista proveedores" -> navController.navigate(
-                                            "MostrarReservas"
+                                            "MostrarProveedores"
                                         )
-                                        "Ver todas las facturas" -> navController.navigate("MostrarFacturas")
 
                                     }
                                     optionsExpanded = false

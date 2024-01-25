@@ -14,6 +14,7 @@ sealed class AppScreens(val ruta:String) {
     object MenuPPAL : AppScreens("MenuPPAL")
 
     object Proveedores : AppScreens("Proveedores")
+    object MostrarProveedores : AppScreens("MostrarProveedores")
 
 
 }

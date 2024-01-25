@@ -16,6 +16,7 @@ import com.example.crudv1.Screens.MostrarReservas
 import com.example.crudv1.Screens.StartNow
 import com.example.crudv1.Screens.Login
 import com.example.crudv1.Screens.MenuPPAL
+import com.example.crudv1.Screens.MostrarProveedores
 import com.example.crudv1.Screens.Proveedores
 
 
@@ -36,6 +37,7 @@ fun AppNavigation() {
         composable(AppScreens.Login.ruta){ Login(navigationController)}
         composable(AppScreens.MenuPPAL.ruta){ MenuPPAL(navigationController) }
         composable(AppScreens.Proveedores.ruta){ Proveedores(navigationController) }
+        composable(AppScreens.MostrarProveedores.ruta){ MostrarProveedores(navigationController) }
 
     }
 }
