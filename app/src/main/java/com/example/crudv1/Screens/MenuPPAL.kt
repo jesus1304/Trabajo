@@ -91,7 +91,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     IconButton(
-                        onClick = { navController.navigate("") },
+                        onClick = { navController.navigate("StartNow") },
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Icon(
@@ -132,7 +132,7 @@ fun MenuPPAL(navController: NavHostController) {
             ) {
 
                 Button(
-                    onClick = { navController.navigate("") },
+                    onClick = { navController.navigate("StartNow") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)
@@ -267,10 +267,10 @@ fun MenuPPAL(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically // Centra verticalmente los iconos
                 ) {
-                    Icon(Icons.Filled.Home, contentDescription = "Home", modifier = Modifier.size(55.dp))
-                    Icon(Icons.Filled.Search, contentDescription = "Search", modifier = Modifier.size(55.dp))
-                    Icon(Icons.Filled.Settings, contentDescription = "Settings", modifier = Modifier.size(55.dp))
-                    Icon(Icons.Filled.Person, contentDescription = "Person", modifier = Modifier.size(55.dp))
+                    Icon(Icons.Filled.Home, contentDescription = "Home", modifier = Modifier.size(50.dp))
+                    Icon(Icons.Filled.Search, contentDescription = "Search", modifier = Modifier.size(50.dp))
+                    Icon(Icons.Filled.Settings, contentDescription = "Settings", modifier = Modifier.size(50.dp))
+                    Icon(Icons.Filled.Person, contentDescription = "Person", modifier = Modifier.size(50.dp))
                 }
             }
         }

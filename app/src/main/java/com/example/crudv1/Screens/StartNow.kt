@@ -88,7 +88,7 @@ fun StartNow(navController: NavHostController) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Button(
-                    onClick = { navController.navigate("ClienteGuardar") },
+                    onClick = { navController.navigate("MenuPPAL") },
                     modifier = Modifier
                         .height(100.dp)
                         .width(300.dp)
