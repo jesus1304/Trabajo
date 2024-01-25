@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,8 @@ import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
@@ -52,293 +55,223 @@ import com.example.crudv1.R
 
 @Composable
 fun MenuPPAL(navController: NavHostController) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally // Alinea el contenido horizontalmente
     ) {
-
-        Text(
-            text = "MERRYSERVICE",
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 36.sp,
-                fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier.padding(top = 26.dp)
-        )
-        Spacer(modifier = Modifier.size(56.dp))
-        Row(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos en el Row
+                .fillMaxSize()
+                .background(Color.Black)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally // Alinea el contenido horizontalmente
         ) {
-            Card(
-                modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-            ) {
-                IconButton(
-                    onClick = { navController.navigate("") },
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.facturas),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(125.dp),
 
-                        tint = (Color.Black)
+            Text(
+                text = "MERRYSERVICE",
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 36.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                modifier = Modifier.padding(top = 76.dp)
+            )
+            Spacer(modifier = Modifier.size(56.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos en el Row
+            ) {
+                Card(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .width(150.dp)
+                ) {
+                    IconButton(
+                        onClick = { navController.navigate("") },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.facturas),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(125.dp),
+                            tint = (Color.Black)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.size(36.dp))
+                Card(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .width(150.dp)
+                ) {
+                    IconButton(
+                        onClick = { navController.navigate("") },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.DateRange,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(125.dp),
+                            tint = (Color.Black)
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+
+                Button(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier
+                        .height(40.dp) // Ajusta la altura según sea necesario
+                        .width(150.dp)
+                ) {
+                    Text(
+                        text = "Facturas",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                }
+                Spacer(modifier = Modifier.size(36.dp))
+                Button(
+                    onClick = { navController.navigate("") },
+                    modifier = Modifier
+                        .height(40.dp) // Ajusta la altura según sea necesario
+                        .width(150.dp)
+                ) {
+                    Text(
+                        text = "Horarios",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     )
                 }
             }
-            Spacer(modifier = Modifier.size(36.dp))
-            Card(
+            Spacer(modifier = Modifier.size(30.dp))
+            Row(
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos en el Row
             ) {
-                IconButton(
-                    onClick = { navController.navigate("") },
-                    modifier = Modifier.fillMaxSize()
+                Card(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .width(150.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.DateRange,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(125.dp),
-
-                        tint = (Color.Black)
-                    )
+                    IconButton(
+                        onClick = { navController.navigate("") },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.List,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(125.dp),
+                            tint = (Color.Black)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.size(36.dp))
+                Card(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .width(150.dp)
+                ) {
+                    IconButton(
+                        onClick = { navController.navigate("") },
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.MailOutline,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(125.dp),
+                            tint = (Color.Black)
+                        )
+                    }
                 }
             }
-        }
-        Spacer(modifier = Modifier.size(10.dp))
-        Row(
-            modifier=Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center
-        ) {
+            Spacer(modifier = Modifier.size(10.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                horizontalArrangement = Arrangement.Center
+            ) {
 
-            Button(
-                onClick = { navController.navigate("") },
-                modifier = Modifier
-                    .height(40.dp) // Ajusta la altura según sea necesario
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Facturas",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-            Spacer(modifier = Modifier.size(36.dp))
-            Button(
-                onClick = { navController.navigate("") },
-                modifier = Modifier
-                    .height(40.dp) // Ajusta la altura según sea necesario
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Horarios",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-        }
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos en el Row
-        ) {
-            Card(
-                modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-            ) {
-                IconButton(
+                Button(
                     onClick = { navController.navigate("") },
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .height(40.dp) // Ajusta la altura según sea necesario
+                        .width(150.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.List,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(125.dp),
-
-                        tint = (Color.Black)
+                    Text(
+                        text = "Tareas",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     )
+
                 }
-
-            }
-            Spacer(modifier = Modifier.size(36.dp))
-            Card(
-                modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-            ) {
-                IconButton(
+                Spacer(modifier = Modifier.size(36.dp))
+                Button(
                     onClick = { navController.navigate("") },
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .height(40.dp) // Ajusta la altura según sea necesario
+                        .width(150.dp)
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(125.dp),
-
-                        tint = (Color.Black)
+                    Text(
+                        text = "Mensajes",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     )
-                }
 
-            }
-        }
-        Spacer(modifier = Modifier.size(10.dp))
-        Row(
-            modifier=Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-
-            Button(
-                onClick = { navController.navigate("") },
-                modifier = Modifier
-                    .height(40.dp) // Ajusta la altura según sea necesario
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Tareas",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-
-            }
-            Spacer(modifier = Modifier.size(36.dp))
-            Button(
-                onClick = { navController.navigate("") },
-                modifier = Modifier
-                    .height(40.dp) // Ajusta la altura según sea necesario
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Perfil",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-
-            }
-        }
-        Spacer(modifier = Modifier.size(20.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos en el Row
-        ) {
-            Card(
-                modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
-            ) {
-                IconButton(
-                    onClick = { navController.navigate("") },
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(125.dp),
-
-                        tint = (Color.Black)
-                    )
                 }
             }
-            Spacer(modifier = Modifier.size(36.dp))
-            Card(
+            Spacer(modifier = Modifier.size(150.dp))
+            Box(
                 modifier = Modifier
-                    .height(150.dp)
-                    .width(150.dp)
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .background(Color.White),
+                contentAlignment = Alignment.BottomCenter
             ) {
-                IconButton(
-                    onClick = { navController.navigate("") },
-                    modifier = Modifier.fillMaxSize() // Llena todo el espacio de la Card
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically // Centra verticalmente los iconos
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.MailOutline,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(125.dp),
-
-                        tint = (Color.Black)
-                    )
+                    Icon(Icons.Filled.Home, contentDescription = "Home", modifier = Modifier.size(55.dp))
+                    Icon(Icons.Filled.Search, contentDescription = "Search", modifier = Modifier.size(55.dp))
+                    Icon(Icons.Filled.Settings, contentDescription = "Settings", modifier = Modifier.size(55.dp))
+                    Icon(Icons.Filled.Person, contentDescription = "Person", modifier = Modifier.size(55.dp))
                 }
-            }
-        }
-        Spacer(modifier = Modifier.size(10.dp))
-        Row(
-            modifier=Modifier
-                .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center
-        ) {
-
-            Button(
-                onClick = { navController.navigate("") },
-                modifier = Modifier
-                    .height(40.dp) // Ajusta la altura según sea necesario
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Ajustes",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-            Spacer(modifier = Modifier.size(36.dp))
-            Button(
-                onClick = { navController.navigate("") },
-                modifier = Modifier
-                    .height(40.dp) // Ajusta la altura según sea necesario
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Mensajes",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
             }
         }
     }
