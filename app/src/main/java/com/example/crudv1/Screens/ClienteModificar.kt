@@ -107,10 +107,7 @@ fun ClienteModificar(navController:NavHostController) {
 
         )
         {
-            Card(
-                modifier = Modifier.padding(top = 65.dp, bottom = 50.dp),
 
-            ) {
                 Column(
                     modifier = Modifier
 
@@ -119,56 +116,65 @@ fun ClienteModificar(navController:NavHostController) {
                 ) {
 
                     Column(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth()
+                            .background(Color(41, 40, 48)),
+
                         verticalArrangement = Arrangement.Center
                     ) {
                         var user by rememberSaveable { mutableStateOf("") }
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(4.dp)
                         ) {
-                            val icon = Icons.Default.AccountCircle
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = Color.Black,
-                                modifier = Modifier.size(44.dp),
-                            )
-
-
                             OutlinedTextField(
                                 value = user,
                                 onValueChange = { user = it },
-                                label = { Text("User") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-
-                                )
+                                label = { Text("User",
+                                    color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.AccountCircle
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
                         }
+
                         var nombre by rememberSaveable { mutableStateOf("") }
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(4.dp)
                         ) {
-                            val icon = Icons.Default.Person
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = Color.Black,
-                                modifier = Modifier.size(44.dp),
-                            )
-
                             OutlinedTextField(
                                 value = nombre,
                                 onValueChange = { nombre = it },
-                                label = { Text("Nombre") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-
-                                )
+                                label = { Text("Name",
+                                    color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Person
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
                         }
+
                         var apellido by rememberSaveable { mutableStateOf("") }
 
                         Row(
@@ -176,22 +182,26 @@ fun ClienteModificar(navController:NavHostController) {
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(4.dp)
                         ) {
-                            val icon = Icons.Default.Person
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = Color.Black,
-                                modifier = Modifier.size(44.dp),
-                            )
                             OutlinedTextField(
                                 value = apellido,
                                 onValueChange = { apellido = it },
-                                label = { Text("Apellido") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-
-                                )
+                                label = { Text("Surnames"
+                                    , color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Person
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
                         }
+
                         var contraseña by rememberSaveable { mutableStateOf("") }
 
                         Row(
@@ -199,68 +209,76 @@ fun ClienteModificar(navController:NavHostController) {
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(4.dp)
                         ) {
-                            val icon = Icons.Default.Lock
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = Color.Black,
-                                modifier = Modifier.size(44.dp),
-                            )
                             OutlinedTextField(
                                 value = contraseña,
                                 onValueChange = { contraseña = it },
-                                label = { Text("Password") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-                                visualTransformation = PasswordVisualTransformation()
+                                label = { Text("Password", color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                visualTransformation = PasswordVisualTransformation(),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Lock
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
                             )
                         }
+
                         var correo by rememberSaveable { mutableStateOf("") }
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(4.dp)
                         ) {
-                            val icon = Icons.Default.Email
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = Color.Black,
-                                modifier = Modifier.size(44.dp),
-                            )
-
                             OutlinedTextField(
                                 value = correo,
                                 onValueChange = { correo = it },
-                                label = { Text("Correo") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-
-                                )
+                                label = { Text("Email", color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Email
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
                         }
+
                         val icon = Icons.Default.Phone
                         var telefono by rememberSaveable { mutableStateOf("") }
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center,
                             modifier = Modifier.padding(7.dp)
-                        )
-                        {
-
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                tint = Color.Black,
-                                modifier = Modifier.size(44.dp),
-                            )
+                        ) {
                             OutlinedTextField(
                                 value = telefono,
                                 onValueChange = { telefono = it },
-                                label = { Text("Telefono") },
-                                modifier = Modifier.fillMaxWidth(),
-                                singleLine = true,
-
-                                )
+                                label = { Text("Telephone", color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
                         }
 
 
@@ -396,5 +414,3 @@ fun ClienteModificar(navController:NavHostController) {
             }
         }
     }
-
-}
