@@ -134,22 +134,6 @@ fun Proveedores(navController: NavHostController) {
 
         )
         {
-            var fecha by rememberSaveable { mutableStateOf("") }
-            val mCalendar: Calendar = Calendar.getInstance()
-            val anio: Int = mCalendar.get(Calendar.YEAR)
-            val mes: Int = mCalendar.get(Calendar.MONTH)
-            val dia: Int = mCalendar.get(Calendar.DAY_OF_MONTH)
-
-            val mDatePickerDialog = DatePickerDialog(
-                LocalContext.current, { _: DatePicker, anio: Int, mes: Int, dia: Int ->
-                    val mesFormateado = String.format("%02d", mes + 1)
-                    val diaFormateado = String.format("%02d", dia)
-                    fecha = "$anio/${mesFormateado}/$diaFormateado"
-                }, anio, mes, dia
-            )
-            var selectedHour by remember { mutableStateOf("") }
-            var piscina by rememberSaveable { mutableStateOf("") }
-            var showDialog by remember { mutableStateOf(false) }
             Column {
 
 
@@ -157,14 +141,7 @@ fun Proveedores(navController: NavHostController) {
                 Column {
                     Spacer(modifier = Modifier.height(15.dp))
 
-                    Text(
-                        text = "Proveedores",
-                        fontSize = 30.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                            .padding(bottom = 16.dp)
-                    )
+
                     Spacer(modifier = Modifier.height(8.dp))
 
                     var nombre by rememberSaveable { mutableStateOf("") }
