@@ -254,7 +254,7 @@ fun MenuPPAL(navController: NavHostController) {
 
                 }
             }
-            Spacer(modifier = Modifier.size(150.dp))
+            Spacer(modifier = Modifier.size(200.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

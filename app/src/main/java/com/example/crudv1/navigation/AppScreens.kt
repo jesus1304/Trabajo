@@ -12,7 +12,7 @@ sealed class AppScreens(val ruta:String) {
     object StartNow : AppScreens("StartNow")
     object Login : AppScreens("Login")
     object MenuPPAL : AppScreens("MenuPPAL")
-    object Ajustes : AppScreens("MostrarProveedores")
+    object Ajustes : AppScreens("Ajustes")
 
     object Proveedores : AppScreens("Proveedores")
     object MostrarProveedores : AppScreens("MostrarProveedores")
