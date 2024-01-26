@@ -254,11 +254,11 @@ fun MenuPPAL(navController: NavHostController) {
 
                 }
             }
-            Spacer(modifier = Modifier.size(150.dp))
+            Spacer(modifier = Modifier.size(200.dp))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(55.dp)
                     .background(Color.White),
                 contentAlignment = Alignment.BottomCenter
             ) {
@@ -267,12 +267,41 @@ fun MenuPPAL(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically // Centra verticalmente los iconos
                 ) {
-                    Icon(Icons.Filled.Home, contentDescription = "Home", modifier = Modifier.size(50.dp))
-                    Icon(Icons.Filled.Search, contentDescription = "Search", modifier = Modifier.size(50.dp))
-                    Icon(Icons.Filled.Settings, contentDescription = "Settings", modifier = Modifier.size(50.dp))
-                    Icon(Icons.Filled.Person, contentDescription = "Person", modifier = Modifier.size(50.dp))
+                    IconButton(onClick = { navController.navigate("") }) {
+                        Icon(
+                            Icons.Filled.Home,
+                            contentDescription = "Home",
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+
+                    IconButton(onClick = { navController.navigate("") }) {
+                        Icon(
+                            Icons.Filled.Search,
+                            contentDescription = "Search",
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+
+                    IconButton(onClick = { navController.navigate("Ajustes") }) {
+                        Icon(
+                            Icons.Filled.Settings,
+                            contentDescription = "Settings",
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+
+                    IconButton(onClick = { navController.navigate("") }) {
+                        Icon(
+                            Icons.Filled.Person,
+                            contentDescription = "Person",
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
+                }
+
+                    }
                 }
             }
         }
-    }
-}
+
