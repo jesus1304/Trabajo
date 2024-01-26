@@ -179,6 +179,7 @@ fun MostrarFacturas(navController: NavHostController) {
                         readOnly = true,
                         modifier = Modifier.fillMaxWidth()
                             .background(Color(41, 40, 48)),
+
                         singleLine = true,
                         leadingIcon = {
                             val dateIcon = Icons.Default.DateRange

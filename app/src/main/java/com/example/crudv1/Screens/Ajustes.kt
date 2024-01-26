@@ -43,7 +43,7 @@ fun Ajustes(navController: NavHostController) {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(modifier = Modifier.size(50.dp))
+            Spacer(modifier = Modifier.size(30.dp))
             // Título de la pantalla
             Text(
                 text = "Ajustes",
@@ -52,7 +52,7 @@ fun Ajustes(navController: NavHostController) {
                     fontSize = 36.sp,
                     fontWeight = FontWeight.Bold
                 ),
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 6.dp)
             )
             Spacer(modifier = Modifier.size(50.dp))
             // Opciones de ajustes
