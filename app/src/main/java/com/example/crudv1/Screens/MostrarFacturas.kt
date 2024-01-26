@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -53,7 +55,7 @@ fun MostrarFacturas(navController: NavHostController) {
 
     data class Reserva(
         val direccion: String,
-        val user:String,
+        val user: String,
         val fecha: String,
         val precio: String,
         val Nif: String
@@ -78,7 +80,7 @@ fun MostrarFacturas(navController: NavHostController) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Localized description",
-                                    tint = Color.White
+                            tint = Color.White
 
                         )
                     }
@@ -89,170 +91,186 @@ fun MostrarFacturas(navController: NavHostController) {
             )
         },
 
-    ) { innerPadding ->
-
-        Column(
+        ) { innerPadding ->
+        Box(
             modifier = Modifier
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-            .background(Color(12, 12, 12)),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .fillMaxSize()
+                .background(Color(12, 12, 12))
+
         ) {
-            var datos by remember { mutableStateOf("") }
-            val context = LocalContext.current
-            LaunchedEffect(Unit) {
-                val db = FirebaseFirestore.getInstance()
-                val coleccion = "factura"
-                val fechaActual = Calendar.getInstance().time
-
-                db.collection(coleccion)
-                    .get()
-                    .addOnSuccessListener { resultado ->
-                        val reservasUsuario = resultado.documents.map { cliente ->
-                            Reserva(
-                                fecha = cliente.getString("fecha") ?: "",
-                                direccion = cliente.getString("direccion") ?: "",
-                                Nif = cliente.getString("Nif") ?: "",
-                                user = cliente.getString("user") ?: "",
-                                precio = cliente.getString("precio") ?: ""
-                            )
-                        }.filter {  it.fecha > SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(fechaActual) }
-                            .sortedBy { it.fecha }
-
-                        reservas.value = reservasUsuario
-                        clienteEncontrado = reservasUsuario.isNotEmpty()
-                    }
-                    .addOnFailureListener {
-                        datos = "No ha podido conectar"
-                    }
-            }
-
-
-            var nombreFiltrar by remember { mutableStateOf("") }
-            var fecha by remember { mutableStateOf("") }
-            val mCalendar: Calendar = Calendar.getInstance()
-            val anio: Int = mCalendar.get(Calendar.YEAR)
-            val mes: Int = mCalendar.get(Calendar.MONTH)
-            val dia: Int = mCalendar.get(Calendar.DAY_OF_MONTH)
-            val mDatePickerDialog = DatePickerDialog(
-                LocalContext.current, { _: DatePicker, anio: Int, mes: Int, dia: Int ->
-                    val mesFormateado = String.format("%02d", mes + 1)
-                    val diaFormateado = String.format("%02d", dia)
-                    fecha = "$anio/${mesFormateado}/$diaFormateado"
-                }, anio, mes, dia
-            )
-            TextField(
-                value = nombreFiltrar,
-                onValueChange = { nombreFiltrar = it },
-                label = { Text("Ingrese el cliente") },
+            Column(
                 modifier = Modifier
-                    .padding(top = 20.dp, start = 5.dp)
-                    .fillMaxWidth()
-                    .background(Color(41, 40, 48)),
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(7.dp)
+                    .padding(innerPadding)
+                    .verticalScroll(rememberScrollState())
+                    .background(Color(12, 12, 12)),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                OutlinedTextField(
-                    value = fecha,
-                    onValueChange = { fecha = it },
-                    label = { Text("Select date",
-                        color = Color.White) },
-                    readOnly = true,
-                    modifier = Modifier.fillMaxWidth()
-                        .background(Color(41, 40, 48)),
-                    singleLine = true,
-                    leadingIcon = {
-                        val dateIcon = Icons.Default.DateRange
-                        Icon(
-                            imageVector = dateIcon,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clickable { mDatePickerDialog.show() }
-                                .align(Alignment.CenterVertically)
-                        )
-                    }
-                )
-            }
-            val reservasFiltradasPorNombreYFecha =
-                if (nombreFiltrar.isNotBlank() || fecha.isNotBlank()) {
-                    reservas.value.filter {
-                        (it.user.equals(
-                            nombreFiltrar,
-                            ignoreCase = true
-                        ) || nombreFiltrar.isBlank()) &&
-                                (it.fecha.equals(
-                                    fecha,
-                                    ignoreCase = true
-                                ) || fecha.isBlank())
-                    }.sortedWith(compareBy({ it.fecha }))
-                } else {
-                    reservas.value.sortedWith(compareBy({ it.fecha }))
+                var datos by remember { mutableStateOf("") }
+                val context = LocalContext.current
+                LaunchedEffect(Unit) {
+                    val db = FirebaseFirestore.getInstance()
+                    val coleccion = "factura"
+                    val fechaActual = Calendar.getInstance().time
+
+                    db.collection(coleccion)
+                        .get()
+                        .addOnSuccessListener { resultado ->
+                            val reservasUsuario = resultado.documents.map { cliente ->
+                                Reserva(
+                                    fecha = cliente.getString("fecha") ?: "",
+                                    direccion = cliente.getString("direccion") ?: "",
+                                    Nif = cliente.getString("Nif") ?: "",
+                                    user = cliente.getString("user") ?: "",
+                                    precio = cliente.getString("precio") ?: ""
+                                )
+                            }.filter {
+                                it.fecha > SimpleDateFormat(
+                                    "yyyy/MM/dd",
+                                    Locale.getDefault()
+                                ).format(fechaActual)
+                            }
+                                .sortedBy { it.fecha }
+
+                            reservas.value = reservasUsuario
+                            clienteEncontrado = reservasUsuario.isNotEmpty()
+                        }
+                        .addOnFailureListener {
+                            datos = "No ha podido conectar"
+                        }
                 }
 
-            for (reserva in reservasFiltradasPorNombreYFecha) {
-                Column(
+
+                var nombreFiltrar by remember { mutableStateOf("") }
+                var fecha by remember { mutableStateOf("") }
+                val mCalendar: Calendar = Calendar.getInstance()
+                val anio: Int = mCalendar.get(Calendar.YEAR)
+                val mes: Int = mCalendar.get(Calendar.MONTH)
+                val dia: Int = mCalendar.get(Calendar.DAY_OF_MONTH)
+                val mDatePickerDialog = DatePickerDialog(
+                    LocalContext.current, { _: DatePicker, anio: Int, mes: Int, dia: Int ->
+                        val mesFormateado = String.format("%02d", mes + 1)
+                        val diaFormateado = String.format("%02d", dia)
+                        fecha = "$anio/${mesFormateado}/$diaFormateado"
+                    }, anio, mes, dia
+                )
+                TextField(
+                    value = nombreFiltrar,
+                    onValueChange = { nombreFiltrar = it },
+                    label = { Text("Ingrese el cliente") },
                     modifier = Modifier
-                        .padding(3.dp)
-                        .border(5.dp, Color(45, 43, 50))
-                        .background(Color(41, 40, 48)),)
-                {
-
-                    Divider(
-                        modifier = Modifier.fillMaxWidth(),
-                        color = Color.Gray,
-                        thickness = 3.dp,
-
+                        .padding(top = 20.dp, start = 5.dp)
+                        .fillMaxWidth()
+                        .background(Color(41, 40, 48)),
+                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.padding(7.dp)
+                ) {
+                    OutlinedTextField(
+                        value = fecha,
+                        onValueChange = { fecha = it },
+                        label = {
+                            Text(
+                                "Select date",
+                                color = Color.White
+                            )
+                        },
+                        readOnly = true,
+                        modifier = Modifier.fillMaxWidth()
+                            .background(Color(41, 40, 48)),
+                        singleLine = true,
+                        leadingIcon = {
+                            val dateIcon = Icons.Default.DateRange
+                            Icon(
+                                imageVector = dateIcon,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .size(44.dp)
+                                    .clickable { mDatePickerDialog.show() }
+                                    .align(Alignment.CenterVertically)
+                            )
+                        }
                     )
-                    Row() {
-
-                        Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Nombre de Usuario: ${reserva.user}",
-                            fontSize = 18.sp,
-                            color = Color.White
-
-                        )
-
+                }
+                val reservasFiltradasPorNombreYFecha =
+                    if (nombreFiltrar.isNotBlank() || fecha.isNotBlank()) {
+                        reservas.value.filter {
+                            (it.user.equals(
+                                nombreFiltrar,
+                                ignoreCase = true
+                            ) || nombreFiltrar.isBlank()) &&
+                                    (it.fecha.equals(
+                                        fecha,
+                                        ignoreCase = true
+                                    ) || fecha.isBlank())
+                        }.sortedWith(compareBy({ it.fecha }))
+                    } else {
+                        reservas.value.sortedWith(compareBy({ it.fecha }))
                     }
-                    Row() {
 
-                        Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Fecha: ${reserva.fecha}",
-                            fontSize = 18.sp,
-                            color = Color.White
+                for (reserva in reservasFiltradasPorNombreYFecha) {
+                    Column(
+                        modifier = Modifier
+                            .padding(3.dp)
+                            .border(5.dp, Color(45, 43, 50))
+                            .background(Color(41, 40, 48)),
+                    )
+                    {
 
-                        )
-                        Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.direccion}",
-                            fontSize = 18.sp,                            color = Color.White
+                        Divider(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = Color.Gray,
+                            thickness = 3.dp,
 
-
-                        )
-                    }
+                            )
                         Row() {
-                        Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.Nif}",
-                            fontSize = 18.sp,
-                            color = Color.White
 
-                        )
-                        Text(
-                            modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Hora: ${reserva.precio}",
-                            fontSize = 18.sp,
-                            color = Color.White
+                            Text(
+                                modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                                text = "Nombre de Usuario: ${reserva.user}",
+                                fontSize = 18.sp,
+                                color = Color.White
 
-                        )
+                            )
+
+                        }
+                        Row() {
+
+                            Text(
+                                modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                                text = "Fecha: ${reserva.fecha}",
+                                fontSize = 18.sp,
+                                color = Color.White
+
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                                text = "Hora: ${reserva.direccion}",
+                                fontSize = 18.sp, color = Color.White
+
+
+                            )
+                        }
+                        Row() {
+                            Text(
+                                modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                                text = "Hora: ${reserva.Nif}",
+                                fontSize = 18.sp,
+                                color = Color.White
+
+                            )
+                            Text(
+                                modifier = Modifier.padding(start = 50.dp, top = 10.dp),
+                                text = "Hora: ${reserva.precio}",
+                                fontSize = 18.sp,
+                                color = Color.White
+
+                            )
+                        }
+
                     }
-
                 }
             }
         }

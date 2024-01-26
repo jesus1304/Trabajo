@@ -82,7 +82,7 @@ fun StartNow(navController: NavHostController) {
 
             // Botón "START NOW!!!"
             Button(
-                onClick = { navController.navigate("MenuPPAL") },
+                onClick = { navController.navigate("ClienteGuardar") },
                 modifier = Modifier
                     .padding(bottom = 50.dp)
                     .height(100.dp)
