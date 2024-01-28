@@ -91,7 +91,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     IconButton(
-                        onClick = { navController.navigate("StartNow") },
+                        onClick = { navController.navigate("Facturas") },
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Icon(
@@ -110,7 +110,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     IconButton(
-                        onClick = { navController.navigate("") },
+                        onClick = { navController.navigate("Proveedores") },
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Icon(
@@ -132,7 +132,7 @@ fun MenuPPAL(navController: NavHostController) {
             ) {
 
                 Button(
-                    onClick = { navController.navigate("StartNow") },
+                    onClick = { navController.navigate("Facturas") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)
@@ -149,7 +149,7 @@ fun MenuPPAL(navController: NavHostController) {
                 }
                 Spacer(modifier = Modifier.size(36.dp))
                 Button(
-                    onClick = { navController.navigate("") },
+                    onClick = { navController.navigate("Proveedores") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)

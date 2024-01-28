@@ -6,6 +6,7 @@ import android.widget.DatePicker
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -150,7 +151,7 @@ fun Facturas(navController: NavHostController) {
                 }, anio, mes, dia
             )
             var selectedHour by remember { mutableStateOf("") }
-            var piscina by rememberSaveable { mutableStateOf("") }
+            var factura by rememberSaveable { mutableStateOf("") }
             var showDialog by remember { mutableStateOf(false) }
             Column {
 
@@ -167,6 +168,50 @@ fun Facturas(navController: NavHostController) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                             .padding(bottom = 16.dp)
                     )
+
+                    val opcionesPiscina = listOf("Compra", "Venta")
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(top = 25.dp,start=5.dp,end=7.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(Color.White)
+                                .border(1.dp, Color.Gray)
+                                .fillMaxWidth()
+                                .clickable { optionsExpanded2 = true }
+                        ) {
+                            Text(
+                                text = if (factura.isEmpty()) "Compra/Venta" else factura,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = optionsExpanded2,
+                            onDismissRequest = { optionsExpanded2 = false }
+                        ) {
+                            opcionesPiscina.forEach { opcion ->
+                                Box(
+                                    modifier = Modifier
+                                        .background(Color.White)
+                                        .border(1.dp, Color.Gray)
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            factura = opcion
+                                            optionsExpanded2 = false
+                                        }
+                                ) {
+                                    Text(
+                                        text = opcion,
+                                        modifier = Modifier.padding(16.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+
                     Spacer(modifier = Modifier.height(8.dp))
 
                     var direccion by rememberSaveable { mutableStateOf("") }
@@ -328,6 +373,7 @@ fun Facturas(navController: NavHostController) {
                                             "direccion" to direccion.toString(),
                                             "precio" to precio.toString(),
                                             "Nif" to Nif.toString(),
+                                            "Factura" to factura.toString(),
                                             "user" to nombreUsuario.toString(),
 
                                             )
@@ -341,7 +387,7 @@ fun Facturas(navController: NavHostController) {
                                                 mensajeConfirmacion = "Reservado"
                                                 fecha = ""
                                                 selectedHour = ""
-                                                piscina = ""
+                                                factura = ""
                                                 user = ""
 
                                                 showDialog = false

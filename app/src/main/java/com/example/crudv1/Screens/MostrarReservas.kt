@@ -133,6 +133,7 @@ fun MostrarReservas(navController: NavHostController) {
         ) {
             var datos by remember { mutableStateOf("") }
             val context = LocalContext.current
+
             LaunchedEffect(Unit) {
                 val db = FirebaseFirestore.getInstance()
                 val coleccion = "factura"
@@ -225,6 +226,7 @@ fun MostrarReservas(navController: NavHostController) {
                         .background(Color(41, 40, 48)),
 
                 )
+
                 {
 
                     Divider(
