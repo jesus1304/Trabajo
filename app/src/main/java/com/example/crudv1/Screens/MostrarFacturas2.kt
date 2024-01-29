@@ -49,7 +49,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MostrarFacturas(navController: NavHostController) {
+fun MostrarFacturas2(navController: NavHostController) {
     var clienteEncontrado by remember { mutableStateOf(false) }
 
 
@@ -129,7 +129,7 @@ fun MostrarFacturas(navController: NavHostController) {
                                 it.fecha > SimpleDateFormat(
                                     "yyyy/MM/dd",
                                     Locale.getDefault()
-                                ).format(fechaActual) && it.Factura == "Compra"
+                                ).format(fechaActual) && it.Factura == "Venta"
                             }
                                 .sortedBy { it.fecha }
                             reservas.value = reservasUsuario
