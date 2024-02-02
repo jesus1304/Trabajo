@@ -5,7 +5,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.crudv1.Screens.Ajustes
 import com.example.crudv1.Screens.MenuInicio
 import com.example.crudv1.Screens.ClienteGuardar
 import com.example.crudv1.Screens.ClienteModificar
@@ -39,7 +38,6 @@ fun AppNavigation() {
         composable(AppScreens.MenuPPAL.ruta){ MenuPPAL(navigationController) }
         composable(AppScreens.Proveedores.ruta){ Proveedores(navigationController) }
         composable(AppScreens.MostrarProveedores.ruta){ MostrarProveedores(navigationController) }
-        composable(AppScreens.Ajustes.ruta){ Ajustes(navigationController) }
 
     }
 }
