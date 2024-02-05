@@ -13,18 +13,18 @@ interface WebService {
     suspend fun getClientes(): Response<ClientesResponse>
 
     @POST("/clientes/agregar")
-    suspend fun addUsuarios(
+    suspend fun addClientes(
         @Body cliente: Cliente
     ): Response<ClientesResponse>
 
     @PUT("/clientes/actualizar/{id}")
-    suspend fun updateUsuario(
+    suspend fun updateClientes(
         @Path("id") idCliente: String,
         @Body cliente: Cliente
     ): Response<ClientesResponse>
 
     @DELETE("/clientes/borrar/{id}")
-    suspend fun deleteUsuario(
+    suspend fun deleteClientes(
         @Path("id") idCliente: String
     ): Response<ClientesResponse>
 }

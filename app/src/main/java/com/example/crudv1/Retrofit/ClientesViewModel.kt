@@ -22,4 +22,37 @@ class ClientesViewModel: ViewModel() {
             }
         }
     }
+
+    fun addCliente(cliente: Cliente) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = RetrofitClient.webService.addClientes(cliente)
+            withContext(Dispatchers.Main) {
+                if(response.body()!!.codigo == "200") {
+                    getClientes()
+                }
+            }
+        }
+    }
+
+    fun updateCliente(idCliente: String, cliente: Cliente) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = RetrofitClient.webService.updateClientes(idCliente, cliente)
+            withContext(Dispatchers.Main) {
+                if(response.body()!!.codigo == "200") {
+                    getClientes()
+                }
+            }
+        }
+    }
+
+    fun deleteCliente(idCliente: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val response = RetrofitClient.webService.deleteClientes(idCliente)
+            withContext(Dispatchers.Main) {
+                if(response.body()!!.codigo == "200") {
+                    getClientes()
+                }
+            }
+        }
+    }
 }
