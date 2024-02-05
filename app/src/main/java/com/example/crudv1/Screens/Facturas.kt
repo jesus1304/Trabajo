@@ -72,7 +72,8 @@ fun Facturas(navController: NavHostController) {
 
     val options = listOf(
         "Ver Facturas Usuario",
-        "Ver todas las facturas"
+        "Compras",
+        "Ventas"
 
     )
     Scaffold(
@@ -114,7 +115,8 @@ fun Facturas(navController: NavHostController) {
                                         "Ver Facturas Usuario" -> navController.navigate(
                                             "MostrarReservas"
                                         )
-                                        "Ver todas las facturas" -> navController.navigate("MostrarFacturas")
+                                        "Compras" -> navController.navigate("MostrarFacturas")
+                                        "Ventas" -> navController.navigate("MostrarFacturas2")
 
                                     }
                                     optionsExpanded = false
@@ -178,14 +180,14 @@ fun Facturas(navController: NavHostController) {
                     ) {
                         Box(
                             modifier = Modifier
-                                .background(Color.White)
+                                .background(Color.Gray)
                                 .border(1.dp, Color.Gray)
                                 .fillMaxWidth()
                                 .clickable { optionsExpanded2 = true }
                         ) {
                             Text(
                                 text = if (factura.isEmpty()) "Compra/Venta" else factura,
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),color = Color.White
                             )
                         }
                         DropdownMenu(
@@ -195,7 +197,7 @@ fun Facturas(navController: NavHostController) {
                             opcionesPiscina.forEach { opcion ->
                                 Box(
                                     modifier = Modifier
-                                        .background(Color.White)
+                                        .background(Color.Gray)
                                         .border(1.dp, Color.Gray)
                                         .fillMaxWidth()
                                         .clickable {

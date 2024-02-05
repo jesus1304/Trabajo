@@ -78,7 +78,8 @@ fun MostrarReservas(navController: NavHostController) {
         val user:String,
         val fecha: String,
         val precio: String,
-        val Nif: String
+        val Nif: String,
+        val Factura: String
 
 
     )
@@ -149,6 +150,7 @@ fun MostrarReservas(navController: NavHostController) {
                                 fecha = cliente.getString("fecha") ?: "",
                                 direccion = cliente.getString("direccion") ?: "",
                                 Nif = cliente.getString("Nif") ?: "",
+                                Factura = cliente.getString("Factura") ?: "",
                                 user = cliente.getString("user") ?: "",
                                 precio = cliente.getString("precio") ?: ""
                             )
@@ -238,12 +240,18 @@ fun MostrarReservas(navController: NavHostController) {
 
                         Text(
                             modifier = Modifier.padding(start = 50.dp, top = 10.dp),
-                            text = "Nombre de Usuario: ${reserva.user}",
+                            text = "Nombre: ${reserva.user}",
                             fontSize = 20.sp,
                             color = Color.White
 
                         )
+                        Text(
+                            modifier = Modifier.padding(start = 100.dp, top = 10.dp),
+                            text = "Tipo: ${reserva.Factura}",
+                            fontSize = 20.sp,
+                            color = Color.White
 
+                        )
                     }
                     Row() {
 
