@@ -9,22 +9,22 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface WebService {
-    @GET("/clientes")
-    suspend fun getClientes(): Response<ClientesResponse>
+    @GET("/listarClientes")
+    suspend fun listarClientes(): Response<ClientesResponse>
 
-    @POST("/clientes/agregar")
-    suspend fun addClientes(
+    @POST("/guardarCliente")
+    suspend fun guardarCliente(
         @Body cliente: Cliente
     ): Response<ClientesResponse>
 
-    @PUT("/clientes/actualizar/{id}")
-    suspend fun updateClientes(
+    @PUT("/actualizarCliente/{idCliente}")
+    suspend fun actualizarCliente(
         @Path("id") idCliente: String,
         @Body cliente: Cliente
     ): Response<ClientesResponse>
 
-    @DELETE("/clientes/borrar/{id}")
-    suspend fun deleteClientes(
+    @DELETE("/eliminarCliente/{idCliente}")
+    suspend fun eliminarCliente(
         @Path("id") idCliente: String
     ): Response<ClientesResponse>
 }
