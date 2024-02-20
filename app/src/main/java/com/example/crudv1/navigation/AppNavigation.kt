@@ -1,6 +1,7 @@
 package com.example.crudv1.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -27,7 +28,7 @@ fun AppNavigation() {
     NavHost(navController = navigationController, startDestination = AppScreens.StartNow.ruta)
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
-        composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController) }
+        composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController, viewModel()) }
         composable(AppScreens.ClienteModificar.ruta) { ClienteModificar(navigationController) }
         composable(AppScreens.InicioSesion.ruta) { InicioSesion(navigationController) }
         composable(AppScreens.Inicio2.ruta) { Inicio2(navigationController) }

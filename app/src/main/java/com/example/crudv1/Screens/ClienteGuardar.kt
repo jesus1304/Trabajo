@@ -1,11 +1,9 @@
 package com.example.crudv1.Screens
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,32 +12,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -51,15 +43,16 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.crudv1.Retrofit.Cliente
+import com.example.crudv1.Retrofit.ClientesViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun ClienteGuardar(navController:NavHostController) {
+fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel){
 
     Scaffold(
         topBar = {
@@ -208,7 +201,7 @@ fun ClienteGuardar(navController:NavHostController) {
                             )
                         }
 
-                        var contraseña by rememberSaveable { mutableStateOf("") }
+                        var contrasena by rememberSaveable { mutableStateOf("") }
 
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -216,8 +209,8 @@ fun ClienteGuardar(navController:NavHostController) {
                             modifier = Modifier.padding(4.dp)
                         ) {
                             OutlinedTextField(
-                                value = contraseña,
-                                onValueChange = { contraseña = it },
+                                value = contrasena,
+                                onValueChange = { contrasena = it },
                                 label = { Text("Password", color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -294,9 +287,11 @@ fun ClienteGuardar(navController:NavHostController) {
 
                         Button(
                             onClick = {
-                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() &&
+                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contrasena.isNotEmpty() &&
                                     telefono.isNotEmpty() && correo.isNotEmpty() && user.isNotEmpty()
                                 ) {
+                                    val cliente = Cliente(nombre, apellido, contrasena, telefono, correo, user)
+                                    viewModel.guardarCliente(cliente)
                                     showDialog = true
                                 } else {
                                     mensajeConfirmacion =
@@ -333,7 +328,7 @@ fun ClienteGuardar(navController:NavHostController) {
                                             val data = hashMapOf(
                                                 "nombre" to nombre,
                                                 "apellido" to apellido,
-                                                "contraseña" to contraseña,
+                                                "contrasena" to contrasena,
                                                 "telefono" to telefono,
                                                 "correo" to correo,
                                                 "user" to user,
@@ -347,7 +342,7 @@ fun ClienteGuardar(navController:NavHostController) {
                                                         "Te has registrado"
                                                     nombre = ""
                                                     apellido = ""
-                                                    contraseña = ""
+                                                    contrasena = ""
                                                     telefono = ""
                                                     correo = ""
                                                     user = ""
@@ -389,3 +384,4 @@ fun ClienteGuardar(navController:NavHostController) {
         }
     }
 }
+
