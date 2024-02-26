@@ -12,9 +12,9 @@ class ClientesViewModel: ViewModel() {
 
     var _listaClientes: ArrayList<Cliente> by mutableStateOf(arrayListOf())
 
-    fun getClientes() {
+    fun listarClientes() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.webService.getClientes()
+            val response = RetrofitClient.webService.listarClientes()
             withContext(Dispatchers.Main) {
                 if (response.body()!!.codigo == "200") {
                     _listaClientes = response.body()!!.data
@@ -23,34 +23,34 @@ class ClientesViewModel: ViewModel() {
         }
     }
 
-    fun addCliente(cliente: Cliente) {
+    fun guardarCliente(cliente: Cliente) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.webService.addClientes(cliente)
+            val response = RetrofitClient.webService.guardarCliente(cliente)
             withContext(Dispatchers.Main) {
                 if(response.body()!!.codigo == "200") {
-                    getClientes()
+                    listarClientes()
                 }
             }
         }
     }
 
-    fun updateCliente(idCliente: String, cliente: Cliente) {
+    fun actualizarCliente(idCliente: String, cliente: Cliente) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.webService.updateClientes(idCliente, cliente)
+            val response = RetrofitClient.webService.actualizarCliente(idCliente, cliente)
             withContext(Dispatchers.Main) {
                 if(response.body()!!.codigo == "200") {
-                    getClientes()
+                    listarClientes()
                 }
             }
         }
     }
 
-    fun deleteCliente(idCliente: String) {
+    fun eliminarCliente(idCliente: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.webService.deleteClientes(idCliente)
+            val response = RetrofitClient.webService.eliminarCliente(idCliente)
             withContext(Dispatchers.Main) {
                 if(response.body()!!.codigo == "200") {
-                    getClientes()
+                    listarClientes()
                 }
             }
         }
