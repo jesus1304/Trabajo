@@ -77,9 +77,9 @@ fun MostrarReservas(navController: NavHostController) {
         val direccion: String,
         val user:String,
         val fecha: String,
-        val precio: String,
+        val precio: Int,
         val Nif: String,
-        val Factura: String
+        val factura: String
 
 
     )
@@ -150,9 +150,9 @@ fun MostrarReservas(navController: NavHostController) {
                                 fecha = cliente.getString("fecha") ?: "",
                                 direccion = cliente.getString("direccion") ?: "",
                                 Nif = cliente.getString("Nif") ?: "",
-                                Factura = cliente.getString("Factura") ?: "",
+                                factura = cliente.getString("factura") ?: "",
                                 user = cliente.getString("user") ?: "",
-                                precio = cliente.getString("precio") ?: ""
+                                precio = cliente.getLong("precio")?.toInt() ?: 0
                             )
                         }.filter {  it.fecha > SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(fechaActual) }
                             .sortedBy { it.fecha }
@@ -247,7 +247,7 @@ fun MostrarReservas(navController: NavHostController) {
                         )
                         Text(
                             modifier = Modifier.padding(start = 100.dp, top = 10.dp),
-                            text = "Tipo: ${reserva.Factura}",
+                            text = "Tipo: ${reserva.factura}",
                             fontSize = 20.sp,
                             color = Color.White
 
@@ -297,7 +297,7 @@ fun MostrarReservas(navController: NavHostController) {
                     Button(
                         onClick = {
                             fechaSeleccionada = reserva.fecha
-                            precioSeleccionada = reserva.precio
+                            precioSeleccionada = reserva.precio.toString()
                             direccionSeleccionada = reserva.direccion
                             NifSeleccionada = reserva.Nif
                             user = reserva.user
