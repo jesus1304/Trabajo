@@ -123,7 +123,7 @@ fun StartNow(navController: NavHostController) {
                     fontSize = 20.sp,
                     modifier = Modifier
                         .clickable {
-                            navController.navigate("MenuPPAL") // Ajusta la acción de navegación según sea necesario
+                            navController.navigate("ClienteGuardar") // Ajusta la acción de navegación según sea necesario
                         }
                 )
             }
