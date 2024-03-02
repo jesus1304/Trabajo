@@ -1,5 +1,6 @@
 package com.example.crudv1.Retrofit
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -25,14 +26,21 @@ class ClientesViewModel: ViewModel() {
 
     fun guardarCliente(cliente: Cliente) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.webService.guardarCliente(cliente)
-            withContext(Dispatchers.Main) {
-                if(response.body()!!.codigo == "200") {
-                    listarClientes()
+            try {
+                val response = RetrofitClient.webService.guardarCliente(cliente)
+                withContext(Dispatchers.Main) {
+                    val body = response.body()
+                    if (body != null && body.codigo == "200") {
+                        listarClientes()
+                    }
                 }
+            } catch (e: Exception) {
+                // Manejar el error aquí
+                Log.e("Error", "Error al guardar el cliente: ${e.message}")
             }
         }
     }
+
 
     fun actualizarCliente(idCliente: String, cliente: Cliente) {
         viewModelScope.launch(Dispatchers.IO) {

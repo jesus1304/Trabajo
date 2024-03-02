@@ -73,7 +73,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                     }
                 },
 
-            )
+                )
         },
 
 
@@ -81,7 +81,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-            .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState()),
 
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -158,7 +158,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 value = nombre,
                                 onValueChange = { nombre = it },
                                 label = { Text("Name",
-                                     color = Color.White) },
+                                    color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .background(Color.Gray),
@@ -284,7 +284,6 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                         val coleccion = "cliente"
                         var showDialog by remember { mutableStateOf(false) }
                         var mensajeConfirmacion by remember { mutableStateOf("") }
-
                         Button(
                             onClick = {
                                 if (nombre.isNotEmpty() && apellido.isNotEmpty() && contrasena.isNotEmpty() &&
@@ -297,7 +296,6 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                     mensajeConfirmacion =
                                         "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
                                 }
-
                             },
                             modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
                                 .fillMaxWidth(),
@@ -325,35 +323,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 confirmButton = {
                                     Button(
                                         onClick = {
-                                            val data = hashMapOf(
-                                                "nombre" to nombre,
-                                                "apellido" to apellido,
-                                                "contrasena" to contrasena,
-                                                "telefono" to telefono,
-                                                "correo" to correo,
-                                                "user" to user,
-
-                                                )
-
-                                            db.collection(coleccion)
-                                                .add(data)
-                                                .addOnSuccessListener {
-                                                    mensajeConfirmacion =
-                                                        "Te has registrado"
-                                                    nombre = ""
-                                                    apellido = ""
-                                                    contrasena = ""
-                                                    telefono = ""
-                                                    correo = ""
-                                                    user = ""
-
-                                                    showDialog = false
-                                                }
-                                                .addOnFailureListener { exception ->
-                                                    mensajeConfirmacion =
-                                                        "Error al guardar: $exception"
-                                                    showDialog = false
-                                                }
+                                            showDialog = false // No necesitas llamar a guardarCliente aquí
                                         }
                                     ) {
                                         Text("Confirmar")
@@ -370,7 +340,6 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 }
                             )
                         }
-
                         if (mensajeConfirmacion.isNotEmpty()) {
                             Text(
                                 text = mensajeConfirmacion,
@@ -378,10 +347,10 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
                             )
                         }
+
                     }
                 }
             }
         }
     }
 }
-
