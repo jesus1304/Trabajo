@@ -346,15 +346,6 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 confirmButton = {
                                     Button(
                                     onClick = {
-
-                                        val data = hashMapOf(
-                                            "nombre" to nombre,
-                                            "apellido" to apellido,
-                                            "contraseña" to contraseña,
-                                            "telefono" to telefono,
-                                            "correo" to correo,
-                                            "user" to user
-                                        )
                                         val cliente = Cliente(nombre, apellido, contraseña, telefono, correo, user)
                                         viewModel.actualizarCliente(nombre, cliente)
                                     }

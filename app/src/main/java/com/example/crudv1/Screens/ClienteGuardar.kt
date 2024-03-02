@@ -325,35 +325,8 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 confirmButton = {
                                     Button(
                                         onClick = {
-                                            val data = hashMapOf(
-                                                "nombre" to nombre,
-                                                "apellido" to apellido,
-                                                "contrasena" to contrasena,
-                                                "telefono" to telefono,
-                                                "correo" to correo,
-                                                "user" to user,
-
-                                                )
-
-                                            db.collection(coleccion)
-                                                .add(data)
-                                                .addOnSuccessListener {
-                                                    mensajeConfirmacion =
-                                                        "Te has registrado"
-                                                    nombre = ""
-                                                    apellido = ""
-                                                    contrasena = ""
-                                                    telefono = ""
-                                                    correo = ""
-                                                    user = ""
-
-                                                    showDialog = false
-                                                }
-                                                .addOnFailureListener { exception ->
-                                                    mensajeConfirmacion =
-                                                        "Error al guardar: $exception"
-                                                    showDialog = false
-                                                }
+                                            val cliente = Cliente(nombre, apellido, contrasena, telefono, correo, user)
+                                            viewModel.guardarCliente(cliente)
                                         }
                                     ) {
                                         Text("Confirmar")

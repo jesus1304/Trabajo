@@ -29,7 +29,7 @@ fun AppNavigation() {
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
         composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController, viewModel()) }
-        composable(AppScreens.ClienteModificar.ruta) { ClienteModificar(navigationController) }
+        composable(AppScreens.ClienteModificar.ruta) { ClienteModificar(navigationController, viewModel()) }
         composable(AppScreens.InicioSesion.ruta) { InicioSesion(navigationController) }
         composable(AppScreens.Inicio2.ruta) { Inicio2(navigationController) }
         composable(AppScreens.Facturas.ruta) { Facturas(navigationController) }
