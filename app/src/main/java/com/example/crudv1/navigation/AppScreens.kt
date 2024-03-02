@@ -17,6 +17,7 @@ sealed class AppScreens(val ruta:String) {
     object Proveedores : AppScreens("Proveedores")
     object MostrarProveedores : AppScreens("MostrarProveedores")
     object MostrarFacturas2 : AppScreens("MostrarFacturas2")
+    object Tareas : AppScreens("Tareas")
 
 
 }

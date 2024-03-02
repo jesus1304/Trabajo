@@ -63,7 +63,6 @@ import kotlinx.coroutines.delay
 
 fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewModel) {
     val viewModel: ClientesViewModel = viewModel
-    var presses by remember { mutableIntStateOf(0) }
 
     Scaffold(
         topBar = {

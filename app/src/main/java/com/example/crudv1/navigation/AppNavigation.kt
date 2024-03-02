@@ -21,6 +21,7 @@ import com.example.crudv1.Screens.MenuPPAL
 import com.example.crudv1.Screens.MostrarFacturas2
 import com.example.crudv1.Screens.MostrarProveedores
 import com.example.crudv1.Screens.Proveedores
+import com.example.crudv1.Screens.Tareas
 
 
 @Composable
@@ -30,7 +31,7 @@ fun AppNavigation() {
     {
         composable(AppScreens.MenuInicio.ruta) { MenuInicio(navigationController) }
         composable(AppScreens.ClienteGuardar.ruta) { ClienteGuardar(navigationController, viewModel()) }
-        composable(AppScreens.ClienteModificar.ruta) { ClienteModificar(navigationController) }
+        composable(AppScreens.ClienteModificar.ruta) { ClienteModificar(navigationController, viewModel()) }
         composable(AppScreens.InicioSesion.ruta) { InicioSesion(navigationController) }
         composable(AppScreens.Inicio2.ruta) { Inicio2(navigationController) }
         composable(AppScreens.Facturas.ruta) { Facturas(navigationController) }
@@ -43,6 +44,7 @@ fun AppNavigation() {
         composable(AppScreens.MostrarProveedores.ruta){ MostrarProveedores(navigationController) }
         composable(AppScreens.Ajustes.ruta){ Ajustes(navigationController) }
         composable(AppScreens.MostrarFacturas2.ruta) { MostrarFacturas2(navigationController) }
+        composable(AppScreens.Tareas.ruta) { Tareas(navigationController) }
 
     }
 }

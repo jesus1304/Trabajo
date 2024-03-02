@@ -155,7 +155,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     Text(
-                        text = "Horarios",
+                        text = "Proveedores",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         style = TextStyle(
@@ -197,7 +197,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     IconButton(
-                        onClick = { navController.navigate("") },
+                        onClick = { navController.navigate("Tareas") },
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Icon(
@@ -219,7 +219,7 @@ fun MenuPPAL(navController: NavHostController) {
             ) {
 
                 Button(
-                    onClick = { navController.navigate("") },
+                    onClick = { navController.navigate("Tareas") },
                     modifier = Modifier
                         .height(40.dp) // Ajusta la altura según sea necesario
                         .width(150.dp)
