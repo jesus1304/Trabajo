@@ -291,7 +291,7 @@ fun MenuPPAL(navController: NavHostController) {
                         )
                     }
 
-                    IconButton(onClick = { navController.navigate("Profile") }) {
+                    IconButton(onClick = { navController.navigate("ClienteModificar") }) {
                         Icon(
                             Icons.Filled.Person,
                             contentDescription = "Person",

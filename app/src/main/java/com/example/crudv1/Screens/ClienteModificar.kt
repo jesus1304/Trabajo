@@ -148,6 +148,34 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 }
                             )
                         }
+                        var idCliente by rememberSaveable { mutableStateOf("") }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = idCliente,
+                                onValueChange = {
+                                    // Intenta convertir el valor de String a Int. Si falla la conversión, se mantiene el valor actual.
+                                    idCliente = it.toIntOrNull()?.toString() ?: idCliente
+                                },
+                                label = { Text("Name", color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Person
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
+                        }
 
                         var nombre by rememberSaveable { mutableStateOf("") }
 
@@ -310,13 +338,18 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 }
                         }
 
+
                         Button(
                             onClick = {
-                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() && correo.isNotEmpty() && telefono.isNotEmpty()) {
+                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() &&
+                                    telefono.isNotEmpty() && correo.isNotEmpty() && user.isNotEmpty()
+                                ) {
+                                    val cliente = Cliente(idCliente.toInt(), nombre, apellido, contraseña, telefono, correo, user)
+                                    viewModel.guardarCliente(cliente)
                                     showDialog = true
-                                }
-                                else {
-                                    mensajeConfirmacion = "Por favor, completa todos los campos"
+                                } else {
+                                    mensajeConfirmacion =
+                                        "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
                                 }
                             },
                             modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
@@ -327,7 +360,7 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                             )
                         ) {
                             Text(
-                                text = "Modificar", fontSize = 18.sp
+                                text = "Registrarse", fontSize = 18.sp
                             )
                         }
 
@@ -344,18 +377,17 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 },
                                 confirmButton = {
                                     Button(
-                                    onClick = {
-                                        val cliente = Cliente(nombre, apellido, contraseña, telefono, correo, user)
-                                        viewModel.actualizarCliente(nombre, cliente)
+                                        onClick = {
+                                            showDialog = false // No necesitas llamar a guardarCliente aquí
+                                        }
+                                    ) {
+                                        Text("Confirmar")
                                     }
-                                ) {
-                                    Text("Confirmar")
-                                }
                                 },
                                 dismissButton = {
                                     Button(
                                         onClick = {
-                                            showDialog = false // Cierra el diálogo al cancelar
+                                            showDialog = false
                                         }
                                     ) {
                                         Text("Cancelar")
@@ -363,15 +395,14 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 }
                             )
                         }
-
                         if (mensajeConfirmacion.isNotEmpty()) {
                             Text(
                                 text = mensajeConfirmacion,
                                 modifier = Modifier.padding(top = 15.dp),
                                 color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
                             )
-
                         }
+
                     }
                 }
             }

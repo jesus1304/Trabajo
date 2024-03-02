@@ -146,6 +146,34 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 }
                             )
                         }
+                        var idCliente by rememberSaveable { mutableStateOf("") }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center,
+                            modifier = Modifier.padding(4.dp)
+                        ) {
+                            OutlinedTextField(
+                                value = idCliente,
+                                onValueChange = {
+                                    // Intenta convertir el valor de String a Int. Si falla la conversión, se mantiene el valor actual.
+                                    idCliente = it.toIntOrNull()?.toString() ?: idCliente
+                                },
+                                label = { Text("IdCliente", color = Color.White) },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Gray),
+                                leadingIcon = {
+                                    val icon = Icons.Default.Person
+                                    Icon(
+                                        imageVector = icon,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(44.dp),
+                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                    )
+                                }
+                            )
+                        }
 
                         var nombre by rememberSaveable { mutableStateOf("") }
 
@@ -201,7 +229,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                             )
                         }
 
-                        var contrasena by rememberSaveable { mutableStateOf("") }
+                        var contraseña by rememberSaveable { mutableStateOf("") }
 
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -209,8 +237,8 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                             modifier = Modifier.padding(4.dp)
                         ) {
                             OutlinedTextField(
-                                value = contrasena,
-                                onValueChange = { contrasena = it },
+                                value = contraseña,
+                                onValueChange = { contraseña = it },
                                 label = { Text("Password", color = Color.White) },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -286,10 +314,10 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                         var mensajeConfirmacion by remember { mutableStateOf("") }
                         Button(
                             onClick = {
-                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contrasena.isNotEmpty() &&
+                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() &&
                                     telefono.isNotEmpty() && correo.isNotEmpty() && user.isNotEmpty()
                                 ) {
-                                    val cliente = Cliente(nombre, apellido, contrasena, telefono, correo, user)
+                                    val cliente = Cliente(idCliente.toInt(), nombre, apellido, contraseña, telefono, correo, user)
                                     viewModel.guardarCliente(cliente)
                                     showDialog = true
                                 } else {
