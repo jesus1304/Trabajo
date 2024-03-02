@@ -52,6 +52,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.crudv1.Retrofit.Cliente
+import com.example.crudv1.Retrofit.ClientesViewModel
 import com.example.crudv1.navigation.SessionManager
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
@@ -59,7 +61,8 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
-fun ClienteModificar(navController:NavHostController) {
+fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewModel) {
+    val viewModel: ClientesViewModel = viewModel
     var presses by remember { mutableIntStateOf(0) }
 
     Scaffold(
@@ -312,7 +315,8 @@ fun ClienteModificar(navController:NavHostController) {
                             onClick = {
                                 if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() && correo.isNotEmpty() && telefono.isNotEmpty()) {
                                     showDialog = true
-                                } else {
+                                }
+                                else {
                                     mensajeConfirmacion = "Por favor, completa todos los campos"
                                 }
                             },
@@ -341,52 +345,22 @@ fun ClienteModificar(navController:NavHostController) {
                                 },
                                 confirmButton = {
                                     Button(
-                                        onClick = {
-                                            val data = hashMapOf(
-                                                "nombre" to nombre,
-                                                "apellido" to apellido,
-                                                "contraseña" to contraseña,
-                                                "telefono" to telefono,
-                                                "correo" to correo,
-                                                "user" to user
-                                            )
-                                            val db = FirebaseFirestore.getInstance()
-                                            val coleccion = "cliente"
-                                            val nombreUsuario = SessionManager.getUsername(context)
+                                    onClick = {
 
-                                            db.collection(coleccion)
-                                                .whereEqualTo("user", nombreUsuario)
-                                                .get()
-                                                .addOnSuccessListener { querySnapshot ->
-                                                    if (!querySnapshot.isEmpty) {
-                                                        for (document in querySnapshot) {
-                                                            db.collection(coleccion)
-                                                                .document(document.id)
-                                                                .set(data)
-                                                                .addOnSuccessListener {
-                                                                    mensajeConfirmacion =
-                                                                        "Datos modificados"
-                                                                    showDialog =
-                                                                        false // Cierra el diálogo al confirmar
-                                                                }
-                                                                .addOnFailureListener { exception ->
-                                                                    mensajeConfirmacion =
-                                                                        "Error al modificar: $exception"
-                                                                }
-                                                        }
-                                                    } else {
-                                                        mensajeConfirmacion =
-                                                            "No se encontraron datos para modificar"
-                                                    }
-                                                }
-                                                .addOnFailureListener { exception ->
-                                                    mensajeConfirmacion =
-                                                        "Error al buscar el documento: $exception"
-                                                }
-                                        }
-                                    ) {
-                                        Text("Confirmar")
+                                        val data = hashMapOf(
+                                            "nombre" to nombre,
+                                            "apellido" to apellido,
+                                            "contraseña" to contraseña,
+                                            "telefono" to telefono,
+                                            "correo" to correo,
+                                            "user" to user
+                                        )
+                                        val cliente = Cliente(nombre, apellido, contraseña, telefono, correo, user)
+                                        viewModel.actualizarCliente(nombre, cliente)
                                     }
+                                ) {
+                                    Text("Confirmar")
+                                }
                                 },
                                 dismissButton = {
                                     Button(
