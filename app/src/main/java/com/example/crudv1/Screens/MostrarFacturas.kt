@@ -42,6 +42,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.crudv1.Retrofit.FacturaViewModel
+import com.example.crudv1.Retrofit.ProveedorViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -49,7 +51,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MostrarFacturas(navController: NavHostController) {
+fun MostrarFacturas(navController: NavHostController, viewModel: FacturaViewModel) {
     var clienteEncontrado by remember { mutableStateOf(false) }
 
 
@@ -114,6 +116,7 @@ fun MostrarFacturas(navController: NavHostController) {
                     val fechaActual = Calendar.getInstance().time
 
                     db.collection(coleccion)
+
                         .get()
                         .addOnSuccessListener { resultado ->
                             val reservasUsuario = resultado.documents.map { cliente ->

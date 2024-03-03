@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -148,34 +149,7 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 }
                             )
                         }
-                        var idCliente by rememberSaveable { mutableStateOf("") }
 
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
-                            modifier = Modifier.padding(4.dp)
-                        ) {
-                            OutlinedTextField(
-                                value = idCliente,
-                                onValueChange = {
-                                    // Intenta convertir el valor de String a Int. Si falla la conversión, se mantiene el valor actual.
-                                    idCliente = it.toIntOrNull()?.toString() ?: idCliente
-                                },
-                                label = { Text("Name", color = Color.White) },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.Gray),
-                                leadingIcon = {
-                                    val icon = Icons.Default.Person
-                                    Icon(
-                                        imageVector = icon,
-                                        contentDescription = null,
-                                        modifier = Modifier.size(44.dp),
-                                        tint = Color.White // Puedes ajustar el color del icono según tus preferencias
-                                    )
-                                }
-                            )
-                        }
 
                         var nombre by rememberSaveable { mutableStateOf("") }
 
@@ -334,32 +308,29 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                     }
                                 }
                                 .addOnFailureListener {
+                                    // Manejar el error si no se pueden obtener los datos del usuario
                                 }
                         }
 
-
                         Button(
                             onClick = {
-                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() &&
-                                    telefono.isNotEmpty() && correo.isNotEmpty() && user.isNotEmpty()
-                                ) {
-                                    val cliente = Cliente(idCliente.toInt(), nombre, apellido, contraseña, telefono, correo, user)
-                                    viewModel.guardarCliente(cliente)
+                                if (nombre.isNotEmpty() && apellido.isNotEmpty() && contraseña.isNotEmpty() && correo.isNotEmpty() && telefono.isNotEmpty()) {
                                     showDialog = true
                                 } else {
-                                    mensajeConfirmacion =
-                                        "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
+                                    mensajeConfirmacion = "Por favor, completa todos los campos"
                                 }
                             },
-                            modifier = Modifier.padding(start = 10.dp,  top = 12.dp)
+                            border = BorderStroke(1.dp, Color.Black),
+                            shape = RoundedCornerShape(8.dp),
+                            modifier = Modifier.padding(start = 20.dp, end = 20.dp,top= 12.dp)
                                 .fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Gray,
+                                containerColor = Color( 25, 33, 156 ),
                                 contentColor = Color.White
-                            )
+                            ),
                         ) {
                             Text(
-                                text = "Registrarse", fontSize = 18.sp
+                                text = "Modificar", fontSize = 18.sp
                             )
                         }
 
@@ -377,7 +348,42 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 confirmButton = {
                                     Button(
                                         onClick = {
-                                            showDialog = false // No necesitas llamar a guardarCliente aquí
+                                            val data = hashMapOf(
+                                                "nombre" to nombre,
+                                                "apellido" to apellido,
+                                                "contraseña" to contraseña,
+                                                "telefono" to telefono,
+                                                "correo" to correo,
+                                                "user" to user
+                                            )
+                                            val db = FirebaseFirestore.getInstance()
+                                            val coleccion = "cliente"
+                                            val nombreUsuario = SessionManager.getUsername(context)
+
+                                            db.collection(coleccion)
+                                                .whereEqualTo("user", nombreUsuario)
+                                                .get()
+                                                .addOnSuccessListener { querySnapshot ->
+                                                    if (!querySnapshot.isEmpty) {
+                                                        for (document in querySnapshot) {
+                                                            db.collection(coleccion)
+                                                                .document(document.id)
+                                                                .set(data)
+                                                                .addOnSuccessListener {
+                                                                    mensajeConfirmacion = "Datos modificados"
+                                                                    showDialog = false // Cierra el diálogo al confirmar
+                                                                }
+                                                                .addOnFailureListener { exception ->
+                                                                    mensajeConfirmacion = "Error al modificar: $exception"
+                                                                }
+                                                        }
+                                                    } else {
+                                                        mensajeConfirmacion = "No se encontraron datos para modificar"
+                                                    }
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    mensajeConfirmacion = "Error al buscar el documento: $exception"
+                                                }
                                         }
                                     ) {
                                         Text("Confirmar")
@@ -386,7 +392,7 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 dismissButton = {
                                     Button(
                                         onClick = {
-                                            showDialog = false
+                                            showDialog = false // Cierra el diálogo al cancelar
                                         }
                                     ) {
                                         Text("Cancelar")
@@ -394,14 +400,15 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                 }
                             )
                         }
+
                         if (mensajeConfirmacion.isNotEmpty()) {
                             Text(
                                 text = mensajeConfirmacion,
                                 modifier = Modifier.padding(top = 15.dp),
                                 color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
                             )
-                        }
 
+                        }
                     }
                 }
             }

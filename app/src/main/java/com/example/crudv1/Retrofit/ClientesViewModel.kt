@@ -42,11 +42,12 @@ class ClientesViewModel: ViewModel() {
     }
 
 
-    fun actualizarCliente(idCliente: String, cliente: Cliente) {
+    fun actualizarCliente(idCliente: Int, cliente: Cliente) {
+        val idClienteString = idCliente.toString() // Convertir Int a String
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.webService.actualizarCliente(idCliente, cliente)
+            val response = RetrofitClient.webService.actualizarCliente(idCliente, cliente) // Pasar idClienteString en lugar de idCliente
             withContext(Dispatchers.Main) {
-                if(response.body()!!.codigo == "200") {
+                if(response.body()?.codigo == "200") { // Usar el operador de navegación segura ?. para evitar NullPointerException
                     listarClientes()
                 }
             }
