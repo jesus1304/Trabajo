@@ -149,6 +149,30 @@ fun Proveedores(navController: NavHostController, viewModel: ProveedorViewModel)
                     Spacer(modifier = Modifier.height(8.dp))
                     var idProveedor by rememberSaveable { mutableStateOf("") }
 
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        OutlinedTextField(
+                            value = idProveedor,
+                            onValueChange = { idProveedor = it },
+                            label = { Text("idProveedor",
+                                color = Color.White) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Gray),
+                            leadingIcon = {
+                                val icon = Icons.Default.Person
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(44.dp),
+                                    tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                )
+                            }
+                        )
+                    }
                     var nombre by rememberSaveable { mutableStateOf("") }
 
                     Row(

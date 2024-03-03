@@ -127,7 +127,7 @@ fun MostrarProveedores(navController: NavHostController, viewModel: ProveedorVie
                 verticalArrangement = Arrangement.spacedBy(10.dp)
 
             ) {
-                var idProveedor by rememberSaveable { mutableStateOf("") }
+                var idProovedor by rememberSaveable { mutableStateOf("") }
                 var correo by remember { mutableStateOf("") }
                 var nombre by remember { mutableStateOf("") }
                 var telefono by remember { mutableStateOf("") }
@@ -135,7 +135,7 @@ fun MostrarProveedores(navController: NavHostController, viewModel: ProveedorVie
                 var showDialog by remember { mutableStateOf(false) }
 
                 LaunchedEffect(Unit) {
-                    val proveedor = Proveedor( idProveedor.toInt(),nombre, apellido,  telefono, correo)
+                    val proveedor = Proveedor( idProovedor.toInt(),nombre, apellido,  telefono, correo)
                     viewModel.listarProveedores()
                     showDialog = true
                 }
