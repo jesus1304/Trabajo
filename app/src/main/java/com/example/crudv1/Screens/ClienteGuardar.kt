@@ -4,8 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -53,7 +55,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 @Composable
 
 fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel){
-
+val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -81,7 +83,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(scrollState) ,
 
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -350,7 +352,8 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
                                 },
                                 confirmButton = {
                                     Button(
-                                        onClick = {
+                                        onClick = {navController.navigate("Login")
+
                                             showDialog = false // No necesitas llamar a guardarCliente aquí
                                         }
                                     ) {
@@ -378,6 +381,7 @@ fun ClienteGuardar(navController:NavHostController, viewModel: ClientesViewModel
 
                     }
                 }
+                Spacer(modifier = Modifier.height(2000.dp))
             }
         }
     }
