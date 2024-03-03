@@ -334,7 +334,6 @@ fun ClienteModificar(navController:NavHostController, viewModel: ClientesViewMod
                                     }
                                 }
                                 .addOnFailureListener {
-                                    // Manejar el error si no se pueden obtener los datos del usuario
                                 }
                         }
 

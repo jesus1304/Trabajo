@@ -155,7 +155,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     Text(
-                        text = "Proveedores",
+                        text = "Proveedor",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         style = TextStyle(

@@ -72,6 +72,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MostrarProveedores(navController: NavHostController, viewModel: ProveedorViewModel) {
+    var clienteEncontrado by remember { mutableStateOf(false) }
 
 
     data class Reserva(
@@ -127,17 +128,32 @@ fun MostrarProveedores(navController: NavHostController, viewModel: ProveedorVie
                 verticalArrangement = Arrangement.spacedBy(10.dp)
 
             ) {
-                var idProovedor by rememberSaveable { mutableStateOf("") }
-                var correo by remember { mutableStateOf("") }
-                var nombre by remember { mutableStateOf("") }
-                var telefono by remember { mutableStateOf("") }
-                var apellido by remember { mutableStateOf("") }
+                var datos by remember { mutableStateOf("") }
                 var showDialog by remember { mutableStateOf(false) }
+                val coleccion = "proveedor"
 
                 LaunchedEffect(Unit) {
-                    val proveedor = Proveedor( idProovedor.toInt(),nombre, apellido,  telefono, correo)
-                    viewModel.listarProveedores()
+                    val db = FirebaseFirestore.getInstance()
+
                     showDialog = true
+                    db.collection(coleccion)
+                        .get()
+                        .addOnSuccessListener { resultado ->
+                            val reservasUsuario = resultado.documents.map { cliente ->
+                                Reserva(
+                                    nombre = cliente.getString("nombre") ?: "",
+                                    apellido = cliente.getString("apellido") ?: "",
+                                    correo = cliente.getString("correo") ?: "",
+                                    telefono = cliente.getString("telefono") ?: "",
+                                )
+                            }
+
+                            reservas.value = reservasUsuario
+                            clienteEncontrado = reservasUsuario.isNotEmpty()
+                        }
+                        .addOnFailureListener {
+                            datos = "No ha podido conectar"
+                        }
                 }
                 var nombreFiltrar by remember { mutableStateOf("") }
                 TextField(
