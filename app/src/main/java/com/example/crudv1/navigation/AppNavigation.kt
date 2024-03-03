@@ -41,7 +41,7 @@ fun AppNavigation() {
         composable(AppScreens.Login.ruta){ Login(navigationController)}
         composable(AppScreens.MenuPPAL.ruta){ MenuPPAL(navigationController) }
         composable(AppScreens.Proveedores.ruta){ Proveedores(navigationController, viewModel()) }
-        composable(AppScreens.MostrarProveedores.ruta){ MostrarProveedores(navigationController) }
+        composable(AppScreens.MostrarProveedores.ruta){ MostrarProveedores(navigationController, viewModel()) }
         composable(AppScreens.Ajustes.ruta){ Ajustes(navigationController) }
         composable(AppScreens.MostrarFacturas2.ruta) { MostrarFacturas2(navigationController) }
         composable(AppScreens.Tareas.ruta) { Tareas(navigationController) }

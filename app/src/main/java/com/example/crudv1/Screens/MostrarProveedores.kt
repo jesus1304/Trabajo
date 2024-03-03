@@ -57,6 +57,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.crudv1.Retrofit.Proveedor
+import com.example.crudv1.Retrofit.ProveedorViewModel
 import com.example.crudv1.navigation.SessionManager
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -69,8 +71,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MostrarProveedores(navController: NavHostController) {
-    var clienteEncontrado by remember { mutableStateOf(false) }
+fun MostrarProveedores(navController: NavHostController, viewModel: ProveedorViewModel) {
 
 
     data class Reserva(
@@ -126,30 +127,17 @@ fun MostrarProveedores(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
 
             ) {
+                var idProveedor by rememberSaveable { mutableStateOf("") }
+                var correo by remember { mutableStateOf("") }
+                var nombre by remember { mutableStateOf("") }
+                var telefono by remember { mutableStateOf("") }
                 var apellido by remember { mutableStateOf("") }
-                var datos by remember { mutableStateOf("") }
+                var showDialog by remember { mutableStateOf(false) }
+
                 LaunchedEffect(Unit) {
-                    val db = FirebaseFirestore.getInstance()
-                    val coleccion = "proveedor"
-
-                    db.collection(coleccion)
-                        .get()
-                        .addOnSuccessListener { resultado ->
-                            val reservasUsuario = resultado.documents.map { cliente ->
-                                Reserva(
-                                    nombre = cliente.getString("nombre") ?: "",
-                                    apellido = cliente.getString("apellido") ?: "",
-                                    correo = cliente.getString("correo") ?: "",
-                                    telefono = cliente.getString("telefono") ?: "",
-                                )
-                            }
-
-                            reservas.value = reservasUsuario
-                            clienteEncontrado = reservasUsuario.isNotEmpty()
-                        }
-                        .addOnFailureListener {
-                            datos = "No ha podido conectar"
-                        }
+                    val proveedor = Proveedor( idProveedor.toInt(),nombre, apellido,  telefono, correo)
+                    viewModel.listarProveedores()
+                    showDialog = true
                 }
                 var nombreFiltrar by remember { mutableStateOf("") }
                 TextField(

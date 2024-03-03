@@ -22,7 +22,7 @@ interface WebService {
     @POST("/guardarProveedor")
     suspend fun guardarProveedor(
         @Body proveedor: Proveedor
-    ): Response<ClientesResponse>
+    ): Response<ProveedorResponse>
 
     @PUT("/actualizarCliente/{idCliente}")
     suspend fun actualizarCliente(
