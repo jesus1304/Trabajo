@@ -59,6 +59,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.crudv1.R
+import com.example.crudv1.Retrofit.Cliente
+import com.example.crudv1.Retrofit.ClientesViewModel
+import com.example.crudv1.Retrofit.Proveedor
+import com.example.crudv1.Retrofit.ProveedorViewModel
 import com.example.crudv1.navigation.SessionManager
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
@@ -66,7 +70,7 @@ import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Proveedores(navController: NavHostController) {
+fun Proveedores(navController: NavHostController, viewModel: ProveedorViewModel) {
     var optionsExpanded by remember { mutableStateOf(false) }
 
     val options = listOf(
@@ -143,7 +147,32 @@ fun Proveedores(navController: NavHostController) {
 
 
                     Spacer(modifier = Modifier.height(8.dp))
+                    var idProveedor by rememberSaveable { mutableStateOf("") }
 
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        OutlinedTextField(
+                            value = idProveedor,
+                            onValueChange = { idProveedor = it },
+                            label = { Text("idProveedor",
+                                color = Color.White) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(Color.Gray),
+                            leadingIcon = {
+                                val icon = Icons.Default.Person
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(44.dp),
+                                    tint = Color.White // Puedes ajustar el color del icono según tus preferencias
+                                )
+                            }
+                        )
+                    }
                     var nombre by rememberSaveable { mutableStateOf("") }
 
                     Row(
@@ -252,8 +281,7 @@ fun Proveedores(navController: NavHostController) {
                     }
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val db = FirebaseFirestore.getInstance()
-                    val coleccion = "proveedor"
+
                     var showDialog by remember { mutableStateOf(false) }
                     var mensajeConfirmacion by remember { mutableStateOf("") }
 
@@ -262,8 +290,9 @@ fun Proveedores(navController: NavHostController) {
                             if (nombre.isNotEmpty() && apellido.isNotEmpty()  &&
                                 telefono.isNotEmpty() && correo.isNotEmpty()
                             ) {
-                                showDialog = true
-                            } else {
+                                val proveedor = Proveedor( idProveedor.toInt(),nombre, apellido,  telefono, correo)
+                                viewModel.guardarProveedor(proveedor)
+                                showDialog = true                            } else {
                                 mensajeConfirmacion =
                                     "Por favor, completa todos los campos" // Mensaje de error si falta algún campo
                             }
@@ -295,32 +324,9 @@ fun Proveedores(navController: NavHostController) {
                             confirmButton = {
                                 Button(
                                     onClick = {
-                                        val data = hashMapOf(
-                                            "nombre" to nombre,
-                                            "apellido" to apellido,
-                                            "telefono" to telefono,
-                                            "correo" to correo,
-
-                                            )
-
-                                        db.collection(coleccion)
-                                            .add(data)
-                                            .addOnSuccessListener {
-                                                mensajeConfirmacion =
-                                                    "Has añadido un proveedor"
-                                                nombre = ""
-                                                apellido = ""
-                                                telefono = ""
-                                                correo = ""
 
                                                 showDialog = false
                                             }
-                                            .addOnFailureListener { exception ->
-                                                mensajeConfirmacion =
-                                                    "Error al guardar: $exception"
-                                                showDialog = false
-                                            }
-                                    }
                                 ) {
                                     Text("Confirmar")
                                 }

@@ -267,13 +267,7 @@ fun MenuPPAL(navController: NavHostController) {
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically // Centra verticalmente los iconos
                 ) {
-                    IconButton(onClick = { navController.navigate("Home") }) {
-                        Icon(
-                            Icons.Filled.Home,
-                            contentDescription = "Home",
-                            modifier = Modifier.size(50.dp)
-                        )
-                    }
+
 
                     IconButton(onClick = { navController.navigate("Search") }) {
                         Icon(

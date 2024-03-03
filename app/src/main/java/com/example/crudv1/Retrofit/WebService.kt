@@ -16,6 +16,13 @@ interface WebService {
     suspend fun guardarCliente(
         @Body cliente: Cliente
     ): Response<ClientesResponse>
+    @GET("/listarProveedores")
+    suspend fun listarProveedores(): Response<ProveedorResponse>
+
+    @POST("/guardarProveedor")
+    suspend fun guardarProveedor(
+        @Body proveedor: Proveedor
+    ): Response<ClientesResponse>
 
     @PUT("/actualizarCliente/{idCliente}")
     suspend fun actualizarCliente(
