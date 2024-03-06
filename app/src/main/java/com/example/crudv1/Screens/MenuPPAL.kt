@@ -114,7 +114,7 @@ fun MenuPPAL(navController: NavHostController) {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.DateRange,
+                            painter = painterResource(id = R.drawable.proveedores),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(125.dp),
