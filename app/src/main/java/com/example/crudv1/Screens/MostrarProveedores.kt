@@ -57,6 +57,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.crudv1.Retrofit.Proveedor
+import com.example.crudv1.Retrofit.ProveedorViewModel
 import com.example.crudv1.navigation.SessionManager
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -69,7 +71,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MostrarProveedores(navController: NavHostController) {
+fun MostrarProveedores(navController: NavHostController, viewModel: ProveedorViewModel) {
     var clienteEncontrado by remember { mutableStateOf(false) }
 
 
@@ -126,12 +128,14 @@ fun MostrarProveedores(navController: NavHostController) {
                 verticalArrangement = Arrangement.spacedBy(10.dp)
 
             ) {
-                var apellido by remember { mutableStateOf("") }
                 var datos by remember { mutableStateOf("") }
+                var showDialog by remember { mutableStateOf(false) }
+                val coleccion = "proveedor"
+
                 LaunchedEffect(Unit) {
                     val db = FirebaseFirestore.getInstance()
-                    val coleccion = "proveedor"
 
+                    showDialog = true
                     db.collection(coleccion)
                         .get()
                         .addOnSuccessListener { resultado ->

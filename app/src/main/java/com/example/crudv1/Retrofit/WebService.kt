@@ -18,15 +18,17 @@ interface WebService {
     ): Response<ClientesResponse>
     @GET("/listarProveedores")
     suspend fun listarProveedores(): Response<ProveedorResponse>
+    @GET("/listarFacturas")
+    suspend fun listarFacturas(): Response<FacturaResponse>
 
     @POST("/guardarProveedor")
     suspend fun guardarProveedor(
         @Body proveedor: Proveedor
-    ): Response<ClientesResponse>
+    ): Response<ProveedorResponse>
 
     @PUT("/actualizarCliente/{idCliente}")
     suspend fun actualizarCliente(
-        @Path("id") idCliente: String,
+        @Path("idCliente") idCliente: Int,
         @Body cliente: Cliente
     ): Response<ClientesResponse>
 

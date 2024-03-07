@@ -8,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -170,6 +172,72 @@ fun Facturas(navController: NavHostController) {
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                             .padding(bottom = 16.dp)
                     )
+                    val db = FirebaseFirestore.getInstance()
+
+                    val (proveedores, setProveedores) = remember { mutableStateOf(emptyList<String>()) }
+                    val (expandedProveedor, setExpandedProveedor) = remember { mutableStateOf(false) }
+                    val (proveedorSeleccionado, setProveedorSeleccionado) = remember { mutableStateOf("") }
+
+                    LaunchedEffect(key1 = db) {
+                        val proveedoresList = mutableListOf<String>()
+                        db.collection("proveedor").get()
+                            .addOnSuccessListener { result ->
+                                for (document in result) {
+                                    val nombre = document.getString("nombre") ?: ""
+                                    proveedoresList.add(nombre)
+                                }
+                                setProveedores(proveedoresList)
+                            }
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(top = 25.dp, start = 5.dp, end = 7.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(Color.Gray)
+                                .border(1.dp, Color.Gray)
+                                .fillMaxWidth()
+                                .clickable {
+                                    setExpandedProveedor(true)
+                                }
+                        ) {
+                            Text(
+                                text = if (proveedorSeleccionado.isEmpty()) "Seleccionar Proveedor" else proveedorSeleccionado,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                                color = Color.White
+                            )
+                        }
+
+                        DropdownMenu(
+                            expanded = expandedProveedor,
+                            onDismissRequest = { setExpandedProveedor(false) }
+                        ) {
+                            proveedores.forEach { proveedor ->
+                                Box(
+                                    modifier = Modifier
+                                        .background(Color.Gray)
+                                        .border(1.dp, Color.Gray)
+                                        .fillMaxWidth()
+                                        .clickable(
+                                            interactionSource = remember { MutableInteractionSource() },
+                                            indication = null
+                                        ) {
+                                            setProveedorSeleccionado(proveedor)
+                                            setExpandedProveedor(false)
+                                        }
+                                ) {
+                                    Text(
+                                        text = proveedor,
+                                        modifier = Modifier.padding(16.dp)
+                                    )
+                                }
+                            }
+                        }
+                    }
+
 
                     val opcionesPiscina = listOf("Compra", "Venta")
 
@@ -326,7 +394,6 @@ fun Facturas(navController: NavHostController) {
                     }
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val db = FirebaseFirestore.getInstance()
                     var user by remember { mutableStateOf("") }
                     var mensajeConfirmacion by remember { mutableStateOf("") }
                     val context = LocalContext.current
@@ -373,14 +440,14 @@ fun Facturas(navController: NavHostController) {
                                         val reservaData = hashMapOf(
                                             "fecha" to fecha.toString(),
                                             "direccion" to direccion.toString(),
-                                            "precio" to precio.toString(),
+                                            "precio" to precio.toInt(),
                                             "Nif" to Nif.toString(),
-                                            "Factura" to factura.toString(),
+                                            "factura" to factura.toString(),
+                                            "proveedor" to proveedorSeleccionado, // Agregar el proveedor seleccionado
                                             "user" to nombreUsuario.toString(),
+                                        )
 
-                                            )
-
-                                        // Agregar la reserva a la colección "piscina"
+                                        // Agregar la reserva a la colección "factura"
                                         db.collection("factura")
                                             .add(reservaData)
                                             .addOnSuccessListener { documentReference ->
@@ -404,9 +471,6 @@ fun Facturas(navController: NavHostController) {
                                                 Log.e("Reserva", "Error al realizar la reserva: $errorMessage")
                                             }
                                     },
-
-
-
                                 ) {
                                     Text("Confirmar")
                                 }
@@ -415,14 +479,11 @@ fun Facturas(navController: NavHostController) {
                                 Button(
                                     onClick = {
                                         showDialog = false
-
                                     }
-
                                 ) {
                                     Text("Cancelar")
                                 }
                             }
-
                         )
                     }
 
@@ -432,8 +493,8 @@ fun Facturas(navController: NavHostController) {
                             modifier = Modifier.padding(top = 5.dp),
                             color = if (mensajeConfirmacion.startsWith("Error")) Color.Red else Color.Green
                         )
-
                     }
+
                     Image(
                         painter = painterResource(id = R.drawable.factura2),
                         contentDescription = "Descripción de la imagen",

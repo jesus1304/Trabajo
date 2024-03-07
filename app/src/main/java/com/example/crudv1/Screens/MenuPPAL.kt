@@ -114,7 +114,7 @@ fun MenuPPAL(navController: NavHostController) {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Icon(
-                            imageVector = Icons.Filled.DateRange,
+                            painter = painterResource(id = R.drawable.proveedores),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(125.dp),
@@ -155,7 +155,7 @@ fun MenuPPAL(navController: NavHostController) {
                         .width(150.dp)
                 ) {
                     Text(
-                        text = "Proveedores",
+                        text = "Proveedor",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         style = TextStyle(
