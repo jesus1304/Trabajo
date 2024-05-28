@@ -12,23 +12,24 @@ interface WebService {
     @GET("/listarClientes")
     suspend fun listarClientes(): Response<ClientesResponse>
 
+    @GET("/listarFacturas")
+    suspend fun listarFacturas(): Response<FacturaResponse>
+
     @POST("/guardarCliente")
     suspend fun guardarCliente(
         @Body cliente: Cliente
     ): Response<ClientesResponse>
     @GET("/listarProveedores")
     suspend fun listarProveedores(): Response<ProveedorResponse>
-    @GET("/listarFacturas")
-    suspend fun listarFacturas(): Response<FacturaResponse>
 
     @POST("/guardarProveedor")
     suspend fun guardarProveedor(
         @Body proveedor: Proveedor
-    ): Response<ProveedorResponse>
+    ): Response<ClientesResponse>
 
     @PUT("/actualizarCliente/{idCliente}")
     suspend fun actualizarCliente(
-        @Path("idCliente") idCliente: Int,
+        @Path("id") idCliente: String,
         @Body cliente: Cliente
     ): Response<ClientesResponse>
 
